@@ -3,7 +3,11 @@ body {
   margin: auto;
   max-width: 38rem;
   padding: 2rem;
-  background: #2C2C2C
+  background: #2C2C2C;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .header-wrapper {
@@ -31,27 +35,34 @@ body {
 }
 
 .divider {
-  width: 75%;
+  width: 125%;
   height: 2px;
   background-color: #FFF;
 }
 
 .wrapper {
-  min-width: 400px;
+  width: 750px;
   background: rgb(255, 0, 0);
   padding: 25px 30px;
-
+  column-count: 2;
 }
 
 .wrapper .item {
-  padding: 5px 15px;
-  height: 50px;
-  margin: 5px 0;
+  height: 60px;
+  margin-bottom: 15px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: rgb(255, 255, 255);
+  background: rgb(255, 255, 255)
+}
 
+.wrapper .item-logo {
+  height: 60px;
+  width: 60px;
+  background-color: blue;
+}
+
+.wrapper .item-text {
+  padding: 5px 15px;
   font-weight: 700;
   color: #000;
   text-transform: uppercase;
