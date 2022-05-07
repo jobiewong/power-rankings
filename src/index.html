@@ -15,6 +15,24 @@
         <h2 class="title-power">Power Rankings</h2>
       </div>
 
+      <div class="settings-container show">
+        <div class="close-button" id="closebutton"></div>
+        <h1>Add Team</h1>
+        <form class="team-form">
+          <label>Team Name</label>
+          <input type="text" id="tname" name="teamname" placeholder="Team Name">
+          <label>Text Colour</label>
+          <input type="text" id="tcolour" name="textcolour" placeholder="#1111">
+          <label>Background Colour</label>
+          <input type="text" id="bcolour" name="bgcolur" placeholder="#FFF">
+          <label>Team Logo</label>
+          <input type="file" class="file-input">
+          <input type="button" value="Submit">
+        </form>
+        <div>$('form').serializeArray():</div>
+        <div id=serializearray>asfdg</div>
+      </div>
+
       <div class="container">
         <div class="numbers">
           <div class="number-wrapper">1</div>
@@ -29,49 +47,146 @@
           <div class="number-wrapper">10</div>
         </div>
 
-        <div class="wrapper">
+        <div class="wrapper" id="wrapperid">
           <div class="item">
             <div class="item-logo"></div>
             <div class="item-text"><span>Otpic Gaming</span></div>
           </div>
           <div class="item">
             <div class="item-logo"></div>
-            <div class="item-text"><span>Otpic Gaming</span></div>
-          </div><div class="item">
+            <div class="item-text"><span>Cloud 9 Blue</span></div>
+          </div>
+          <div class="item">
             <div class="item-logo"></div>
-            <div class="item-text"><span>Otpic Gaming</span></div>
-          </div><div class="item">
+            <div class="item-text"><span>The Guard</span></div>
+          </div>
+          <div class="item">
             <div class="item-logo"></div>
-            <div class="item-text"><span>Otpic Gaming</span></div>
-          </div><div class="item">
+            <div class="item-text"><span>XSET</span></div>
+          </div>
+          <div class="item">
             <div class="item-logo"></div>
-            <div class="item-text"><span>Otpic Gaming</span></div>
-          </div><div class="item">
+            <div class="item-text"><span>Fazze</span></div>
+          </div>
+          <div class="item">
             <div class="item-logo"></div>
-            <div class="item-text"><span>Otpic Gaming</span></div>
-          </div><div class="item">
+            <div class="item-text"><span>Version1</span></div>
+          </div>
+          <div class="item">
             <div class="item-logo"></div>
-            <div class="item-text"><span>Otpic Gaming</span></div>
-          </div><div class="item">
+            <div class="item-text"><span>Sentinels</span></div>
+          </div>
+          <div class="item">
             <div class="item-logo"></div>
-            <div class="item-text"><span>Otpic Gaming</span></div>
-          </div><div class="item">
+            <div class="item-text"><span>Knights</span></div>
+          </div>
+          <div class="item">
             <div class="item-logo"></div>
-            <div class="item-text"><span>Otpic Gaming</span></div>
-          </div><div class="item">
+            <div class="item-text"><span>NRG</span></div>
+          </div>
+          <div class="item">
             <div class="item-logo"></div>
-            <div class="item-text"><span>Otpic Gaming</span></div>
+            <div class="item-text"><span>Luminosity</span></div>
+          </div>
+        </div>
+
+        <div class="overflow-wrapper" id="overflowwrapper">
+          <div class="item">
+            <div class="item-logo"></div>
+            <div class="item-text"><span>GenG</span></div>
           </div>
         </div>
       </div>
-      <script>window.$ = window.jQuery = require('jquery');</script>
+
+      <div class="add-button" id="addbutton" type="button">Add Team</div>
+
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>      
+
       <script>
         var dragArea = document.querySelector(".wrapper");
         new Sortable (dragArea, {
-          animation: 300
+          group: {
+            name: 'mainlist',
+            put: function(to) {
+              return to.el.children.length == 9;
+            }   
+          },
+          animation: 300,
+       
+        })
+
+        var dragAreaOverflow = document.querySelector(".overflow-wrapper");
+        new Sortable (dragAreaOverflow, {
+          group: {
+            name: 'overflowlist',
+            put: 'mainlist'
+          },
+          animation: 300,
         })
       </script>
 
+      
+
+      <script type="text/javascript">
+        $("#addbutton").click(function () {
+          $(".settings-container").removeClass('hidden');
+          $(".settings-container").addClass('show');
+        });
+
+        $("#closebutton").click(function () {
+          $(".settings-container").removeClass('show');
+          $(".settings-container").addClass('hidden');
+          });
+      </script>
+
+      <script>
+        // $(function() {
+        //   var update = function() {
+        //       $('#serializearray').text(        
+        //           JSON.stringify($('form').serializeArray())
+        //       );
+        //       $('#serialize').text(        
+        //           JSON.stringify($('form').serialize())
+        //       );
+        //   };
+        //   update();
+        //   $('form').change(update);
+        // })
+
+        function addTeam() {
+          var t_input = document.getElementById("tname"); 
+          var teamname = t_input.value.trim(); 
+
+          // var c_input = document.getElementById("tcolour"); 
+          // var textcolour = c_input.value.trim(); 
+
+          // var bg_input = document.getElementById("bgcolour"); 
+          // var backgroundcolour = bg_input.value.trim(); 
+       
+          const itemDiv = document.createElement("div");
+          itemDiv.className = "item";
+          const itemLogo = document.createElement("div");
+          itemLogo.className = "item-logo";
+          const itemText = document.createElement("div");
+          itemText.className = "item-text";
+
+          itemDiv.appendChild(itemLogo)
+          itemDiv.appendChild(itemText)
+          itemText.innerText = teamname;
+          // teamDiv.style.textcolour = textcolour;
+          console.log(itemDiv);
+
+          document.getElementById("overflowwrapper").appendChild(itemDiv);
+        }
+
+        var button = document.querySelector('input[type="button"]');
+        button.addEventListener('click',addTeam,false);
+      </script>
   </body>
 </html>
+
+<div class="item">
+  <div class="item-logo"></div>
+  <div class="item-text"><span>Otpic Gaming</span></div>
+</div>
