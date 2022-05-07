@@ -2,10 +2,36 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
+    <title>Power Rankings</title>
     <link rel="stylesheet" href="index.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;900&display=swap');
+    </style> 
   </head>
   <body>
-    
+      <div class="header-wrapper">
+        <h1 class="title-name">Platchat Valorant</h1>
+        <div class="divider"></div>
+        <h2 class="title-power">Power Rankings</h2>
+      </div>
+      <div class="wrapper">
+        <div class="item">
+          <span>Draggable List Item One</span>
+        </div>
+        <div class="item">
+          <span>Draggable List Item Two</span>
+        </div>
+        <div class="item">
+          <span>Draggable List Item Three</span>
+        </div>
+      </div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+      <script>
+        var dragArea = document.querySelector(".wrapper");
+        new Sortable (dragArea, {
+          animation: 300
+        })
+      </script>
   </body>
 </html>
