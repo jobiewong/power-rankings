@@ -110,6 +110,8 @@ body {
   height: var(--item-height);
   width: var(--item-height);
   background-color: blue;
+  background-size:cover;
+  background-position: center;
 }
 
 .wrapper .item-text {
@@ -147,13 +149,15 @@ body {
   height: var(--item-height);
   width: var(--item-height);
   background-color: blue;
+  background-size:cover;
+  background-position: center;
 }
 
 .overflow-wrapper .item-text {
   display: none;
   padding: 5px 15px;
   font-weight: 700;
-  color: #000;
+  /* color: #000; */
   text-transform: uppercase;
   font-size: 24px;
 }

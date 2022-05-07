@@ -15,7 +15,7 @@
         <h2 class="title-power">Power Rankings</h2>
       </div>
 
-      <div class="settings-container show">
+      <div class="settings-container hidden">
         <div class="close-button" id="closebutton"></div>
         <h1>Add Team</h1>
         <form class="team-form">
@@ -26,11 +26,10 @@
           <label>Background Colour</label>
           <input type="text" id="bcolour" name="bgcolur" placeholder="#FFF">
           <label>Team Logo</label>
-          <input type="file" class="file-input">
+          <input type="file" id="logofile" name="logo_file" class="file-input" accept=".jpg, .jpeg, .png">
           <input type="button" value="Submit">
         </form>
-        <div>$('form').serializeArray():</div>
-        <div id=serializearray>asfdg</div>
+        <img id="outImage">
       </div>
 
       <div class="container">
@@ -66,7 +65,7 @@
           </div>
           <div class="item">
             <div class="item-logo"></div>
-            <div class="item-text"><span>Fazze</span></div>
+            <div class="item-text"><span>Faze</span></div>
           </div>
           <div class="item">
             <div class="item-logo"></div>
@@ -91,10 +90,10 @@
         </div>
 
         <div class="overflow-wrapper" id="overflowwrapper">
-          <div class="item">
+          <!-- <div class="item">
             <div class="item-logo"></div>
             <div class="item-text"><span>GenG</span></div>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -123,10 +122,13 @@
             put: 'mainlist'
           },
           animation: 300,
+          removeOnSpill: true, // Enable plugin
+          // Called when item is spilled
+          onSpill: function(/**Event*/evt) {
+            evt.item // The spilled item
+          }
         })
       </script>
-
-      
 
       <script type="text/javascript">
         $("#addbutton").click(function () {
@@ -141,28 +143,28 @@
       </script>
 
       <script>
-        // $(function() {
-        //   var update = function() {
-        //       $('#serializearray').text(        
-        //           JSON.stringify($('form').serializeArray())
-        //       );
-        //       $('#serialize').text(        
-        //           JSON.stringify($('form').serialize())
-        //       );
-        //   };
-        //   update();
-        //   $('form').change(update);
-        // })
+          document.getElementById('logofile').addEventListener('change', readURL, true);
+          function readURL(){
+            var file = document.getElementById("logofile").files[0];
+            var reader = new FileReader();
+            reader.onloadend = function(){
+                logoFile = "url(" + reader.result + ")";        
+            }
+            if(file){
+                reader.readAsDataURL(file);
+              }else{
+              }
+          }
 
-        function addTeam() {
+          function addTeam(file) {
           var t_input = document.getElementById("tname"); 
           var teamname = t_input.value.trim(); 
 
-          // var c_input = document.getElementById("tcolour"); 
-          // var textcolour = c_input.value.trim(); 
+          var c_input = document.getElementById("tcolour"); 
+          var textcolour = c_input.value.trim(); 
 
-          // var bg_input = document.getElementById("bgcolour"); 
-          // var backgroundcolour = bg_input.value.trim(); 
+          var bg_input = document.getElementById("bcolour"); 
+          var backgroundcolour = bg_input.value.trim(); 
        
           const itemDiv = document.createElement("div");
           itemDiv.className = "item";
@@ -174,19 +176,18 @@
           itemDiv.appendChild(itemLogo)
           itemDiv.appendChild(itemText)
           itemText.innerText = teamname;
-          // teamDiv.style.textcolour = textcolour;
-          console.log(itemDiv);
+          itemText.style.color = textcolour;
+          itemDiv.style.backgroundColor = backgroundcolour;
+          itemLogo.style.backgroundImage = file;
 
           document.getElementById("overflowwrapper").appendChild(itemDiv);
+
+          $(".settings-container").removeClass('show');
+          $(".settings-container").addClass('hidden');
         }
 
         var button = document.querySelector('input[type="button"]');
-        button.addEventListener('click',addTeam,false);
+        button.addEventListener('click',function(){addTeam(logoFile)},false);
       </script>
   </body>
 </html>
-
-<div class="item">
-  <div class="item-logo"></div>
-  <div class="item-text"><span>Otpic Gaming</span></div>
-</div>
