@@ -8,7 +8,7 @@
       @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,900&display=swap');
       </style> 
   </head>
-  <body>
+  <body id="body">
       <div class="header-wrapper">
         <h1 class="title-name">Platchat Valorant</h1>
         <div class="divider"></div>
@@ -35,7 +35,7 @@
         <img id="outImage">
       </div>
 
-      <div class="container">
+      <div class="container" id="containermain">
         <div class="numbers">
           <div class="number-wrapper">1</div>
           <div class="number-wrapper">2</div>
@@ -104,6 +104,7 @@
         <path fill="#ffffff" d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
         <path fill="#ffffff" d="M12 2C12.5523 2 13 2.44772 13 3V21C13 21.5523 12.5523 22 12 22C11.4477 22 11 21.5523 11 21V3C11 2.44772 11.4477 2 12 2Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
         </svg></div>
+      <div class="export-button" id="exportbutton" type="button">Export</div>
 
 
 <!-- SCRIPT TIME -->
@@ -236,5 +237,7 @@
         var button = document.querySelector('input[type="button"]');
         button.addEventListener('click',function(){addTeam(logoFile)},false);
       </script>
+
+      <script src="js/export.js"></script>
   </body>
-</html>
+</html> 
