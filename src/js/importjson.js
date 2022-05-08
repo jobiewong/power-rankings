@@ -1,3 +1,12 @@
+document.getElementById('rankingsfile').addEventListener('change', readURL, true);
+
+var isUploaded = false;
+
+function readURL(){
+    isUploaded = true;
+    console.log(isUploaded);
+}
+
 function importJSON(file) {
     const array = [];
     var temp = [];
@@ -18,7 +27,10 @@ function importJSON(file) {
     temp = array[3]
     const logo_urls = temp[1];
 
-    var wrapper = document.getElementById("wrapperid")
+    var wrapper = document.getElementById("wrapperid");
+    wrapper.innerHTML = "";
+    var overflow = document.getElementById("overflowwrapper");
+    overflow.innerHTML = "";
 
     for (var i = 0; i < team_names.length; i++) {
 
@@ -36,7 +48,12 @@ function importJSON(file) {
         itemLogo.style.backgroundImage = "url(" + logo_urls[i] + ")";    
         itemDiv.style.backgroundColor = bg_colours[i];
 
-        wrapper.appendChild(itemDiv);
+        if (i < 10){
+            wrapper.appendChild(itemDiv);
+        }
+        else {
+            overflow.appendChild(itemDiv);
+        }
     }
 }
 
@@ -46,4 +63,23 @@ function loadDefault() {
     });
 }
 
+function addRankings() {
+    var file = document.getElementById("rankingsfile").files[0];
+    path = file["path"];
+
+    console.log(path);
+
+    $.getJSON(path, function(json) {
+        importJSON(json);
+    });
+
+    $(".import-container").removeClass('show');
+    $(".import-container").addClass('hidden');
+}
+
 document.onload = loadDefault()
+
+var button = document.querySelector('#importSubmit');
+button.addEventListener('click', (event) => {
+    addRankings();
+});
