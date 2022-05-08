@@ -34,6 +34,19 @@
         </form>
         <img id="outImage">
       </div>
+      
+      <div class="import-container hidden">
+        <div class="close-button" id="importclose"><svg class="x-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-reactroot="">
+          <path fill="#000" d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
+          <path fill="#000" d="M12 2C12.5523 2 13 2.44772 13 3V21C13 21.5523 12.5523 22 12 22C11.4477 22 11 21.5523 11 21V3C11 2.44772 11.4477 2 12 2Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
+          </svg></div>
+        <h1>Import Rankings</h1>
+        <form>
+          <input type="file" id="rankingsfile" name="rankings-file" class="file-input" accept=".txt">
+          <input id="importSubmit" name="import_submit" type="button" value="Submit">
+        </form>
+        <div class="import-preview" id="importPreview"></div>
+      </div>
 
       <div class="container" id="containermain">
         <div class="numbers">
@@ -104,7 +117,12 @@
         <path fill="#ffffff" d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
         <path fill="#ffffff" d="M12 2C12.5523 2 13 2.44772 13 3V21C13 21.5523 12.5523 22 12 22C11.4477 22 11 21.5523 11 21V3C11 2.44772 11.4477 2 12 2Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
         </svg></div>
-      <div class="export-button" id="exportbutton" type="button">Export</div>
+
+      <div class="bottom-buttons" id="bottombuttons">
+        <div class="export-button" id="exportbutton" type="button">Export</div>
+        <div class="import-button" id="importbutton" type="button">Import</div>
+      </div>
+      
 
 
 <!-- SCRIPT TIME -->
@@ -113,71 +131,10 @@
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>  
 
-      <script>
-        var localStorageAvailable = (typeof localStorage !== "undefined");
+      <!-- Save and load sort order -->
+      <script class="sortClass" src="js/saveLoadSort.js"></script>
 
-        function getValue(sortable) {
-            var order = localStorage.getItem(sortable.options.category);
-            return order ? order.split('|') : [];
-        }
-
-        function setValue(sortable) {
-            var order = sortable.toArray();
-            console.log(order);
-            localStorage.setItem(sortable.options.category, order.join('|'));
-        }
-
-        function setupStore() {
-            if (localStorageAvailable) {
-                return {
-                    get: getValue,
-                    set: setValue
-                };
-            }
-            return {}; 
-        }
-
-        function onAdd(evt) {
-            setValue(this);
-            console.log("set");
-        }
-
-        function applyState($section, categoryName) {
-            if (localStorageAvailable) {
-                var order = localStorage.getItem(categoryName);
-                var itemIds = order ? order.split('|') : [];
-                var $items = _.map(itemIds, function(itemId, index) {
-                    return $("[data-id='" + itemId + "'");
-                });
-                $section.append($items);
-            }
-        }
-
-        var options = {
-          group: "listgroup",
-          store: setupStore(),
-          onAdd: onAdd,
-          animation: 200
-        }
-
-        function init() {
-
-          // applyState($(".wrapper"), "main");
-          // applyState($(".overflow-wrapper"), "overflow");
-
-        $(".lists").each(function(index, section) {
-          var $section = $(section);
-          var category = $section.attr("data-category");
-          var sortableOptions = _.extend({}, options, { category: category });
-          applyState($section, category);
-          $section.data("twoColumnSortable", new Sortable(section, sortableOptions));
-            });
-        }
-
-        init();
-
-      </script>
-
+      <!-- Buttons -->
       <script type="text/javascript">
         $("#addbutton").click(function () {
           $(".settings-container").removeClass('hidden');
@@ -188,56 +145,23 @@
           $(".settings-container").removeClass('show');
           $(".settings-container").addClass('hidden');
           });
+
+        $("#importbutton").click(function () {
+          $(".import-container").removeClass('hidden');
+          $(".import-container").addClass('show');
+        });    
+        
+        $("#importclose").click(function () {
+          $(".import-container").removeClass('show');
+          $(".import-container").addClass('hidden');
+          });
       </script>
 
-      <script>
-          document.getElementById('logofile').addEventListener('change', readURL, true);
-          function readURL(){
-            var file = document.getElementById("logofile").files[0];
-            var reader = new FileReader();
-            reader.onloadend = function(){
-                logoFile = "url(" + reader.result + ")";        
-            }
-            if(file){
-                reader.readAsDataURL(file);
-              }else{
-              }
-          }
+      <!-- Create new team -->
+      <script src="js/addTeam.js"></script>
 
-          function addTeam(file) {
-          var t_input = document.getElementById("tname"); 
-          var teamname = t_input.value.trim(); 
-
-          var c_input = document.getElementById("tcolour"); 
-          var textcolour = c_input.value.trim(); 
-
-          var bg_input = document.getElementById("bcolour"); 
-          var backgroundcolour = bg_input.value.trim(); 
-       
-          const itemDiv = document.createElement("div");
-          itemDiv.className = "item";
-          const itemLogo = document.createElement("div");
-          itemLogo.className = "item-logo";
-          const itemText = document.createElement("div");
-          itemText.className = "item-text";
-
-          itemDiv.appendChild(itemLogo)
-          itemDiv.appendChild(itemText)
-          itemText.innerText = teamname;
-          itemText.style.color = textcolour;
-          itemDiv.style.backgroundColor = backgroundcolour;
-          itemLogo.style.backgroundImage = file;
-
-          document.getElementById("overflowwrapper").appendChild(itemDiv);
-
-          $(".settings-container").removeClass('show');
-          $(".settings-container").addClass('hidden');
-        }
-
-        var button = document.querySelector('input[type="button"]');
-        button.addEventListener('click',function(){addTeam(logoFile)},false);
-      </script>
-
+      <!-- Export as file -->
       <script src="js/export.js"></script>
+      <script src="js/import.js" defer></script>
   </body>
 </html> 
