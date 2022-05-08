@@ -39,7 +39,8 @@ var localStorageAvailable = (typeof localStorage !== "undefined");
           group: "listgroup",
           store: setupStore(),
           onAdd: onAdd,
-          animation: 200
+          animation: 200,
+          forceFallback: true
         }
 
         function init() {

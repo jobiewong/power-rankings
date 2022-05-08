@@ -3,8 +3,6 @@ document.getElementById('rankingsfile').addEventListener('change', readURL, true
         var file = document.getElementById("rankingsfile").files[0];
         var reader = new FileReader();
         reader.onloadend = function(){
-            document.getElementById('importPreview')
-                        .textContent=reader.result;
             rankingsfile = reader.result;
         }
 
