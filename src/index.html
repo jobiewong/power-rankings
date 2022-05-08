@@ -16,7 +16,10 @@
       </div>
 
       <div class="settings-container hidden">
-        <div class="close-button" id="closebutton"></div>
+        <div class="close-button" id="closebutton"><svg class="x-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-reactroot="">
+          <path fill="#000" d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
+          <path fill="#000" d="M12 2C12.5523 2 13 2.44772 13 3V21C13 21.5523 12.5523 22 12 22C11.4477 22 11 21.5523 11 21V3C11 2.44772 11.4477 2 12 2Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
+          </svg></div>
         <h1>Add Team</h1>
         <form class="team-form">
           <label>Team Name</label>
@@ -46,9 +49,9 @@
           <div class="number-wrapper">10</div>
         </div>
 
-        <div class="wrapper" id="wrapperid">
+        <div class="wrapper lists" id="wrapperid" data-category="main">
           <div class="item">
-            <div class="item-logo"></div>
+            <div class="item-logo" style="background-image: url(https://i.imgur.com/7H0XB42.png)"></div>
             <div class="item-text"><span>Otpic Gaming</span></div>
           </div>
           <div class="item">
@@ -89,7 +92,7 @@
           </div>
         </div>
 
-        <div class="overflow-wrapper" id="overflowwrapper">
+        <div class="overflow-wrapper lists" id="overflowwrapper" data-category="overflow">
           <!-- <div class="item">
             <div class="item-logo"></div>
             <div class="item-text"><span>GenG</span></div>
@@ -97,37 +100,81 @@
         </div>
       </div>
 
-      <div class="add-button" id="addbutton" type="button">Add Team</div>
+      <div class="add-button" id="addbutton" type="button"><svg class="plus-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-reactroot="">
+        <path fill="#ffffff" d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
+        <path fill="#ffffff" d="M12 2C12.5523 2 13 2.44772 13 3V21C13 21.5523 12.5523 22 12 22C11.4477 22 11 21.5523 11 21V3C11 2.44772 11.4477 2 12 2Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
+        </svg></div>
+
+
+<!-- SCRIPT TIME -->
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>      
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>  
 
       <script>
-        var dragArea = document.querySelector(".wrapper");
-        new Sortable (dragArea, {
-          group: {
-            name: 'mainlist',
-            put: function(to) {
-              return to.el.children.length == 9;
-            }   
-          },
-          animation: 300,
-       
-        })
+        var localStorageAvailable = (typeof localStorage !== "undefined");
 
-        var dragAreaOverflow = document.querySelector(".overflow-wrapper");
-        new Sortable (dragAreaOverflow, {
-          group: {
-            name: 'overflowlist',
-            put: 'mainlist'
-          },
-          animation: 300,
-          removeOnSpill: true, // Enable plugin
-          // Called when item is spilled
-          onSpill: function(/**Event*/evt) {
-            evt.item // The spilled item
-          }
-        })
+        function getValue(sortable) {
+            var order = localStorage.getItem(sortable.options.category);
+            return order ? order.split('|') : [];
+        }
+
+        function setValue(sortable) {
+            var order = sortable.toArray();
+            console.log(order);
+            localStorage.setItem(sortable.options.category, order.join('|'));
+        }
+
+        function setupStore() {
+            if (localStorageAvailable) {
+                return {
+                    get: getValue,
+                    set: setValue
+                };
+            }
+            return {}; 
+        }
+
+        function onAdd(evt) {
+            setValue(this);
+            console.log("set");
+        }
+
+        function applyState($section, categoryName) {
+            if (localStorageAvailable) {
+                var order = localStorage.getItem(categoryName);
+                var itemIds = order ? order.split('|') : [];
+                var $items = _.map(itemIds, function(itemId, index) {
+                    return $("[data-id='" + itemId + "'");
+                });
+                $section.append($items);
+            }
+        }
+
+        var options = {
+          group: "listgroup",
+          store: setupStore(),
+          onAdd: onAdd,
+          animation: 200
+        }
+
+        function init() {
+
+          // applyState($(".wrapper"), "main");
+          // applyState($(".overflow-wrapper"), "overflow");
+
+        $(".lists").each(function(index, section) {
+          var $section = $(section);
+          var category = $section.attr("data-category");
+          var sortableOptions = _.extend({}, options, { category: category });
+          applyState($section, category);
+          $section.data("twoColumnSortable", new Sortable(section, sortableOptions));
+            });
+        }
+
+        init();
+
       </script>
 
       <script type="text/javascript">
