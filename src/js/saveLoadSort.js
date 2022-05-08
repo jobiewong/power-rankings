@@ -40,7 +40,8 @@ var localStorageAvailable = (typeof localStorage !== "undefined");
           store: setupStore(),
           onAdd: onAdd,
           animation: 200,
-          forceFallback: true
+          forceFallback: true,
+          removeOnSpill: true
         }
 
         function init() {

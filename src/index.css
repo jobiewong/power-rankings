@@ -21,7 +21,7 @@ body {
 }
 
 .header-wrapper h1 {
-  color: hsl(175, 34%, 64%);
+  color: #84c2bd;
   font-weight: 300;
   font-size: 24px;
   text-transform: uppercase;
@@ -113,7 +113,7 @@ body {
 .wrapper .item-logo {
   height: var(--item-height);
   width: var(--item-height);
-  background-color: blue;
+  background-color: black;
   background-size:cover;
   background-position: center;
 }
@@ -152,7 +152,7 @@ body {
 .overflow-wrapper .item-logo {
   height: var(--item-height);
   width: var(--item-height);
-  background-color: blue;
+  background-color: black;
   background-size:cover;
   background-position: center;
 }
@@ -232,7 +232,7 @@ body {
 
 .settings-container input[type=button] {
   width: 100%;
-  background-color: #4CAF50;
+  background-color: #84c2bd;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -295,8 +295,17 @@ body {
 .export-button {
   color: white;
   cursor:pointer;
-  background-color: red;
+  background-color: #5858586d;
   margin: 0 5px;
+  padding: 5px 10px;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0) 0px 5px 15px;
+  transition: all 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045)
+}
+
+.export-button:hover {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+  background-color: #84c2bd;
 }
 
 /* Import Functionality */
@@ -304,8 +313,17 @@ body {
 .import-button {
   color: white;
   cursor: pointer;
-  background-color: green;
   margin: 0 5px;
+  background-color: #5858586d;
+  margin: 0 5px;
+  padding: 5px 10px;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045)
+}
+
+.import-button:hover {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+  background-color: #84c2bd;
 }
 
 .import-container {
@@ -338,7 +356,7 @@ body {
 
 .import-container input[type=button] {
   width: 100%;
-  background-color: #4CAF50;
+  background-color: #84c2bd;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;

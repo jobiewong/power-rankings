@@ -1,0 +1,50 @@
+{
+    "name": [
+        "Optic Gaming",
+        "Cloud 9 Blue",
+        "The Guard",
+        "Faze",
+        "Xset",
+        "Version1",
+        "NRG",
+        "Sentinels",
+        "Knights",
+        "Luminosity"
+    ],
+    "tcolour": [
+        " #000",
+        "#FFF",
+        "#c4a15f",
+        "#d73a2b",
+        "#FFF",
+        "#FFF",
+        "#FFF",
+        "#FFF",
+        "#f2b60e",
+        "#FFF"
+    ],
+    "bgcolour": [
+        "#93c950",
+        "#00a6ea",
+        "#60259d",
+        "#000",
+        "#f41434",
+        "#9646fa",
+        "#000",
+        "#c40034",
+        "#000",
+        "#3cbcdc"
+    ],
+    "logo": [
+        "/assets/logos/optic.png",
+        "/assets/logos/cloudnine.png",
+        "/assets/logos/theguard.png",
+        "/assets/logos/faze.png",
+        "/assets/logos/xset.png",
+        "/assets/logos/versionone.png",
+        "/assets/logos/nrg.png",
+        "/assets/logos/sentinels.png",
+        "/assets/logos/knights.png",
+        "/assets/logos/luminosity.png"
+    ]
+}
