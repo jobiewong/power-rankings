@@ -113,7 +113,7 @@ body {
 .wrapper .item-logo {
   height: var(--item-height);
   width: var(--item-height);
-  background-color: black;
+  background-color: white;
   background-size:cover;
   background-position: center;
 }

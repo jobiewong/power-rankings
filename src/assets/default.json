@@ -36,15 +36,15 @@
         "#3cbcdc"
     ],
     "logo": [
-        "/assets/logos/optic.png",
-        "/assets/logos/cloudnine.png",
-        "/assets/logos/theguard.png",
-        "/assets/logos/faze.png",
-        "/assets/logos/xset.png",
-        "/assets/logos/versionone.png",
-        "/assets/logos/nrg.png",
-        "/assets/logos/sentinels.png",
-        "/assets/logos/knights.png",
-        "/assets/logos/luminosity.png"
+        "assets/logos/optic.png",
+        "assets/logos/cloudnine.png",
+        "assets/logos/theguard.png",
+        "assets/logos/faze.png",
+        "assets/logos/xset.png",
+        "assets/logos/versionone.png",
+        "assets/logos/nrg.png",
+        "assets/logos/sentinels.png",
+        "assets/logos/knights.png",
+        "assets/logos/luminosity.png"
     ]
 }
