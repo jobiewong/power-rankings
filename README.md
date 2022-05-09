@@ -22,7 +22,7 @@ To load an exported ranking, click "Import" and choose your file.
 ## 📝 To Do
 Features that need adding:
 - Click to add tier break
-- Import logo from url
+- Import logo from url ✔
 - Don't allow more than 10 items to be dragged into the main list
 - Team presets dropdown list
 - Save rankings as default preset
