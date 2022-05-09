@@ -114,6 +114,7 @@ body {
   height: var(--item-height);
   width: var(--item-height);
   background-color: white;
+  background-image: url(assets/logos/defaultlogo.png);
   background-size:cover;
   background-position: center;
 }
@@ -152,7 +153,7 @@ body {
 .overflow-wrapper .item-logo {
   height: var(--item-height);
   width: var(--item-height);
-  background-color: black;
+  background-image: url(assets/logos/defaultlogo.png);
   background-size:cover;
   background-position: center;
 }

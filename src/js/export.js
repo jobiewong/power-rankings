@@ -1,6 +1,7 @@
 var save = document.getElementById('exportbutton');
 
 save.addEventListener('click', (event) => {
+    console.log("click");
 
     function generateJSON() {
         var data = {
@@ -19,8 +20,6 @@ save.addEventListener('click', (event) => {
             split_url = child_logo.split('src');
             split_url = split_url[1].split('\"');
             split_url = split_url[0].substring(1)
-
-            console.log(child_bg_colour);
             
             data["name"].push(child_text);
             data["tcolour"].push(child_text_colour);
@@ -44,5 +43,5 @@ save.addEventListener('click', (event) => {
 
     anchor.click();
     window.URL.revokeObjectURL(url);
-    document.removeChild(anchor);
+    // document.removeChild(anchor);
 });
