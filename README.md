@@ -1,6 +1,8 @@
 # ⚡️ Power Rankings
 A simple Electron-based webapp which aims to emulate the power rankings format of [Platchat](https://www.youtube.com/c/PlatChatVALORANT) - an eSports podcast for Overwatch and Valorant.
 
+https://i.imgur.com/wBSSVQS.mp4
+
 ## ✍️ To Use
 To use, simply open up the app and a default rankings will be opened.
 
