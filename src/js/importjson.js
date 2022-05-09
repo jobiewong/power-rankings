@@ -45,7 +45,7 @@ function importJSON(file) {
         itemDiv.appendChild(itemText)
         itemText.innerText = team_names[i];
         itemText.style.color = text_colours[i];
-        itemLogo.style.backgroundImage = "url(" + logo_urls[i] + ")";    
+        itemLogo.style.backgroundImage = logo_urls[i];
         itemDiv.style.backgroundColor = bg_colours[i];
 
         if (i < 10){

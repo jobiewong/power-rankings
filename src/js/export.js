@@ -17,9 +17,11 @@ save.addEventListener('click', (event) => {
             child_bg_colour = $(this).css("background-color");
             child_logo = $(this).children(".item-logo").css('background-image');
 
-            split_url = child_logo.split('src');
-            split_url = split_url[1].split('\"');
-            split_url = split_url[0].substring(1)
+            split_url = child_logo;
+
+            // split_url = child_logo.split('src');
+            // split_url = split_url[1].split('\"');
+            // split_url = split_url[0].substring(1)
             
             data["name"].push(child_text);
             data["tcolour"].push(child_text_colour);
