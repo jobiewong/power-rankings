@@ -22,7 +22,8 @@ To load an exported ranking, click "Import" and choose your file.
 
 ## 🛠 Installation
 
-...
+1. Go to [Releases](https://github.com/jobiewong/power-rankings/releases) and select the appropriate version to download
+2. Simply unzip the folder and launch!
 
 ## 📝 To Do
 
