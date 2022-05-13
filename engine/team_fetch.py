@@ -19,8 +19,6 @@ IMAGE_DIR = "images"
 
 # create dictionary to store values
 data = {"team_names": [],
-        "text_colour": [],
-        "bg_colour": [],
         "img_refs": []}
 
 table_container = soup.find(class_="eg-standing-container")
@@ -79,6 +77,6 @@ for rows in table_rows:
 df = pd.DataFrame(data=data)
 df.head()
 
-# df.to_csv(OUTPUT_DIR, index=False)
+df.to_csv(OUTPUT_DIR, index=False)
 
 # %%
