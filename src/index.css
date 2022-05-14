@@ -274,14 +274,14 @@ body {
   visibility: hidden;
   opacity: 0;
   z-index: -1; 
-  top: 5%;
+  top: 0%;
 }
 
 .show {
   visibility: visible;
   z-index: 200;
   opacity: 1;
-  top: 15%; 
+  top: 5%; 
 }
 
 /* Bottom Buttons */
@@ -384,6 +384,8 @@ body {
   margin: 0 10px 10px 0;
   color:rgba(255, 255, 255, 0.232)
 }
+
+/* Tab Stuff */
 
 nav {
   width: 100%;

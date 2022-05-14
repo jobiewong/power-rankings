@@ -7,7 +7,8 @@ function readURL(){
     console.log(isUploaded);
 }
 
-function importJSON(file) {
+function importJson(file) {
+
     const array = [];
     var temp = [];
 
@@ -59,7 +60,7 @@ function importJSON(file) {
 
 function loadDefault() {
     $.getJSON("./assets/default.json", function(json) {
-        importJSON(json);
+        importJson(json);
     });
 }
 
@@ -70,7 +71,7 @@ function addRankings() {
     console.log(path);
 
     $.getJSON(path, function(json) {
-        importJSON(json);
+        importTeamJson(json);
     });
 
     $(".import-container").removeClass('show');

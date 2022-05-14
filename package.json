@@ -1,7 +1,7 @@
 {
   "name": "power-rankings",
   "productName": "power-rankings",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -20,7 +20,9 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "icon"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
