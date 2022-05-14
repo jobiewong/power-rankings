@@ -16,23 +16,45 @@
       </div>
 
       <div class="settings-container hidden">
+
         <div class="close-button" id="closebutton"><svg class="x-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-reactroot="">
           <path fill="#000" d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
           <path fill="#000" d="M12 2C12.5523 2 13 2.44772 13 3V21C13 21.5523 12.5523 22 12 22C11.4477 22 11 21.5523 11 21V3C11 2.44772 11.4477 2 12 2Z" clip-rule="evenodd" fill-rule="evenodd" undefined="1"></path>
           </svg></div>
+
         <h1>Add Team</h1>
-        <form class="team-form">
-          <label>Team Name</label>
-          <input type="text" id="tname" name="teamname" placeholder="Team Name" value="Team">
-          <label>Text Colour</label>
-          <input type="text" id="tcolour" name="textcolour" placeholder="#000" value="#000">
-          <label>Background Colour</label>
-          <input type="text" id="bcolour" name="bgcolur" placeholder="#FFF" value="#FFF">
-          <label>Team Logo</label>
-          <input type="text" id="logourl" name"logourl" placeholder="Image url">
-          <input type="file" id="logofile" name="logo_file" class="file-input" accept=".jpg, .jpeg, .png">
+
+        <nav>
+          <a class="link link1">Presets</a>
+          <a class="link link2">Custom</a>
+        </nav>
+        
+        <div class="taboverflow-wrapper">
+          <div class="content-wrapper">
+            <div id="Presets" class="tabitem tabitem1 contentOne">
+              <label>Team Presets</label>
+              <select id="sel" onchange="show(this)">
+                <option value="">-- Select --</option>
+              </select>
+            </div>
+            
+            <div id="Custom" class="tabitem tabitem2 contentOne">
+              <form class="team-form">
+                <label>Team Name</label>
+                <input type="text" id="tname" name="teamname" placeholder="Team Name" value="Team">
+                <label>Text Colour</label>
+                <input type="text" id="tcolour" name="textcolour" placeholder="#000" value="#000">
+                <label>Background Colour</label>
+                <input type="text" id="bcolour" name="bgcolur" placeholder="#FFF" value="#FFF">
+                <label>Team Logo</label>
+                <input type="text" id="logourl" name"logourl" placeholder="Image url">
+                <input type="file" id="logofile" name="logo_file" class="file-input" accept=".jpg, .jpeg, .png">
+              </form>
+            </div>
+          </div>
           <input type="button" value="Submit">
-        </form>
+        </div>
+
         <img id="outImage">
       </div>
       
@@ -127,5 +149,7 @@
 
       <!-- Export as file -->
       <script src="js/export.js"></script>
+
+      <script src="js/tabs.js"></script>
   </body>
 </html> 
