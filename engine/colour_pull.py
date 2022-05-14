@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.colors as colors
 import math
 
-PATH = "teams.csv"
+PATH = "team_names.csv"
 IMG_PATH = "images"
 OUT_DIR = "team_database.csv"
 

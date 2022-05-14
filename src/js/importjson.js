@@ -68,8 +68,6 @@ function addRankings() {
     var file = document.getElementById("rankingsfile").files[0];
     path = file["path"];
 
-    console.log(path);
-
     $.getJSON(path, function(json) {
         importTeamJson(json);
     });

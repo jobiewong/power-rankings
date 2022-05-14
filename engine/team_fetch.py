@@ -14,7 +14,7 @@ page = urlopen(url)
 html = page.read().decode("utf-8")
 soup = BeautifulSoup(html, "html.parser")
 
-OUTPUT_DIR = str(Path.cwd()) + "/teams.csv"
+OUTPUT_DIR = str(Path.cwd()) + "/team_names.csv"
 IMAGE_DIR = "images"
 
 # create dictionary to store values
@@ -36,7 +36,9 @@ for rows in table_rows:
         if i % 2 == 0:
             # convert codes to string and remove /t
             unicode = str(code.text)
-            reg = re.sub(r'\W+', '', unicode)
+            reg = re.sub(r'[^\S ]+', '', unicode)
+
+            print(reg)
 
             data["team_names"].append(reg)
 
