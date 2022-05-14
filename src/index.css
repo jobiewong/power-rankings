@@ -156,6 +156,7 @@ body {
   background-image: url(assets/logos/defaultlogo.png);
   background-size:cover;
   background-position: center;
+  background-color: #FFF;
 }
 
 .overflow-wrapper .item-text {
@@ -452,4 +453,44 @@ nav a {
   width: 250px;
   height: 100%;
   overflow: hidden;
+}
+
+.selectResult {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.selectResult p {
+  margin: 5px 0;
+}
+
+.previewItem {
+  width: 100%;
+  height: var(--item-height);
+  align-items: center;
+  display: flex;
+}
+
+.previewLogo {
+  height: 110px;
+  width: 110px;
+  background-color: white;
+  background-image: url(assets/logos/defaultlogo.png);
+  background-size:cover;
+  background-position: center;
+  margin: 30px 10px 10px 10px;
+}
+
+.previewText {
+  padding: 5px 15px;
+  font-weight: 700;
+  color: #000;
+  text-transform: uppercase;
+  font-size: 24px;
+  display: block;
+}
+
+.presetSubmit {
+  margin-top: 14px !important;
 }

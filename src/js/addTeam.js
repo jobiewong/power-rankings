@@ -63,5 +63,5 @@ function addTeam(file) {
   $(".settings-container").addClass('hidden');
 }
 
-var button = document.querySelector('input[type="button"]');
+var button = document.getElementById("Submit");
 button.addEventListener('click',function(){addTeam(logoFile)},false);
