@@ -115,7 +115,8 @@ body {
   width: var(--item-height);
   background-color: white;
   background-image: url(assets/logos/defaultlogo.png);
-  background-size:cover;
+  background-size:45px;
+  background-repeat: no-repeat;  
   background-position: center;
 }
 
@@ -154,7 +155,8 @@ body {
   height: var(--item-height);
   width: var(--item-height);
   background-image: url(assets/logos/defaultlogo.png);
-  background-size:cover;
+  background-size:45px;
+  background-repeat: no-repeat;
   background-position: center;
   background-color: #FFF;
 }
