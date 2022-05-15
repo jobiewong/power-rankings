@@ -2,7 +2,7 @@
 
 A simple Electron-based webapp which aims to emulate the power rankings format of [Platchat](https://www.youtube.com/c/PlatChatVALORANT) - an eSports podcast for Overwatch and Valorant.
 
-![electron_pwuLVl9gPx](https://user-images.githubusercontent.com/81576910/167455982-8d2a87db-dade-4b04-87c9-f92df3b609fe.gif)
+![electron_mCDL3ebgg4](https://user-images.githubusercontent.com/81576910/168495630-d061e5a3-7c1f-49bc-a1d9-bbfa6261124b.gif)
 
 ## ✍️ To Use
 
