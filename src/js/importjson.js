@@ -4,7 +4,6 @@ var isUploaded = false;
 
 function readURL(){
     isUploaded = true;
-    console.log(isUploaded);
 }
 
 function importJson(file) {
@@ -68,10 +67,8 @@ function addRankings() {
     var file = document.getElementById("rankingsfile").files[0];
     path = file["path"];
 
-    console.log(path);
-
     $.getJSON(path, function(json) {
-        importTeamJson(json);
+        importJson(json);
     });
 
     $(".import-container").removeClass('show');
@@ -82,5 +79,6 @@ document.onload = loadDefault()
 
 var button = document.querySelector('#importSubmit');
 button.addEventListener('click', (event) => {
+    console.log("click")
     addRankings();
 });

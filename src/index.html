@@ -33,9 +33,12 @@
           <div class="content-wrapper">
             <div id="Presets" class="tabitem tabitem1 contentOne">
               <label>Team Presets</label>
-              <select id="sel" onchange="show(this)">
+              <select id="sel" class="custom-select" onchange="show(this)">
                 <option value="">-- Select --</option>
               </select>
+              <div class="selectResult" id="select-result">
+              </div>
+              <input type="button" id="SubmitPreset" value="Submit" class="presetSubmit">
             </div>
             
             <div id="Custom" class="tabitem tabitem2 contentOne">
@@ -47,12 +50,12 @@
                 <label>Background Colour</label>
                 <input type="text" id="bcolour" name="bgcolur" placeholder="#FFF" value="#FFF">
                 <label>Team Logo</label>
-                <input type="text" id="logourl" name"logourl" placeholder="Image url">
+                <input type="text" id="logourl" name="logourl" placeholder="Image url">
                 <input type="file" id="logofile" name="logo_file" class="file-input" accept=".jpg, .jpeg, .png">
+                <input type="button" id="Submit" value="Submit">
               </form>
             </div>
           </div>
-          <input type="button" value="Submit">
         </div>
 
         <img id="outImage">
@@ -72,9 +75,24 @@
 
       <div class="container" id="containermain">
         <div class="numbers">
-          <div class="number-wrapper">1</div>
-          <div class="number-wrapper">2</div>
-          <div class="number-wrapper">3</div>
+          <div class="number-wrapper">1
+            <div class="first-container">
+              <div class="first line-one"></div>
+              <div class="first line-two"></div>
+            </div>
+          </div>
+          <div class="number-wrapper">2
+            <div class="first-container">
+              <div class="second line-one"></div>
+              <div class="second line-two"></div>
+            </div>
+          </div>
+          <div class="number-wrapper">3
+            <div class="first-container">
+              <div class="third line-one"></div>
+              <div class="third line-two"></div>
+            </div>
+          </div>
           <div class="number-wrapper">4</div>
           <div class="number-wrapper">5</div>
           <div class="number-wrapper">6</div>
@@ -106,7 +124,7 @@
         <div class="import-button" id="importbutton" type="button">Import</div>
       </div>
 
-      <div class="version-container">V. 0.1.0a</div>
+      <div class="version-container">V. 0.3.0a</div>
       
 
 
@@ -152,5 +170,6 @@
 
       <script src="js/tabs.js"></script>
       <script src="js/teamPresets.js"></script>
-  </body>
+      <!-- <script src="js/selectStyling.js"></script> -->
+    </body>
 </html> 

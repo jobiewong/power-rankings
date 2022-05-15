@@ -13,7 +13,9 @@ data = {
 }
 
 df = pd.read_csv(csvFilePath)
-df.head()
+df = df.sort_values("team_names")
+df = df.reset_index(drop=True)
+
 
 for index, row in df.iterrows():
     team_name = df.iloc[index, 0]
@@ -25,6 +27,7 @@ for index, row in df.iterrows():
     data["tcolour"].append(text_col)
     data["bgcolour"].append(bg_col)
     data["logo"].append(logo_file)
+
 
 with open(jsonFilePath, "w") as jsonFile:
     jsonFile.write(json.dumps(data, indent=4))

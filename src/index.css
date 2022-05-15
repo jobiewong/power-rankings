@@ -76,6 +76,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 /* List Item Styling */
@@ -115,7 +116,8 @@ body {
   width: var(--item-height);
   background-color: white;
   background-image: url(assets/logos/defaultlogo.png);
-  background-size:cover;
+  background-size:45px;
+  background-repeat: no-repeat;  
   background-position: center;
 }
 
@@ -154,8 +156,10 @@ body {
   height: var(--item-height);
   width: var(--item-height);
   background-image: url(assets/logos/defaultlogo.png);
-  background-size:cover;
+  background-size:45px;
+  background-repeat: no-repeat;
   background-position: center;
+  background-color: #FFF;
 }
 
 .overflow-wrapper .item-text {
@@ -247,7 +251,7 @@ body {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
-  display: inline-block;
+  display: none;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
@@ -452,4 +456,80 @@ nav a {
   width: 250px;
   height: 100%;
   overflow: hidden;
+}
+
+.selectResult {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.selectResult p {
+  margin: 5px 0;
+}
+
+.previewItem {
+  width: 100%;
+  height: var(--item-height);
+  align-items: center;
+  display: flex;
+}
+
+.previewLogo {
+  height: 110px;
+  width: 110px;
+  background-color: white;
+  background-image: url(assets/logos/defaultlogo.png);
+  background-size:cover;
+  background-position: center;
+  margin: 30px 10px 10px 10px;
+}
+
+.previewText {
+  padding: 5px 15px;
+  font-weight: 700;
+  color: #000;
+  text-transform: uppercase;
+  font-size: 24px;
+  display: block;
+}
+
+.presetSubmit {
+  margin-top: 14px !important;
+}
+
+/* First Second Third Lines */
+
+.first-container {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.first {
+  background-color: #cbae39;
+}
+
+.second {
+  background: #d8d8d8;
+}
+
+.third {
+  background: #ac8a61;
+}
+
+.line-one {
+  height: 3px;
+  width: 60%;
+  margin-bottom: 4px;
+}
+
+.line-two {
+  height: 3px;
+  width: 37%;
+  margin-bottom: 3px;
 }
