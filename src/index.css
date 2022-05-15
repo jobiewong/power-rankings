@@ -76,6 +76,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 /* List Item Styling */
@@ -495,4 +496,40 @@ nav a {
 
 .presetSubmit {
   margin-top: 14px !important;
+}
+
+/* First Second Third Lines */
+
+.first-container {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.first {
+  background-color: #cbae39;
+}
+
+.second {
+  background: #d8d8d8;
+}
+
+.third {
+  background: #ac8a61;
+}
+
+.line-one {
+  height: 3px;
+  width: 60%;
+  margin-bottom: 4px;
+}
+
+.line-two {
+  height: 3px;
+  width: 37%;
+  margin-bottom: 3px;
 }
