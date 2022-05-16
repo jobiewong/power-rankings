@@ -38,6 +38,13 @@
               </select>
               <div class="selectResult" id="select-result">
               </div>
+              <div class="slider-wrapper">
+                <label>Logo Scale</label>
+                <div class="slider-container">
+                  <input type='range' min="1" max="100" value="75" id="presetSlider" class="slider">
+                  <div id="slider-preview">75%</div>
+                </div>
+              </div>
               <input type="button" id="SubmitPreset" value="Submit" class="presetSubmit">
             </div>
             
@@ -52,6 +59,13 @@
                 <label>Team Logo</label>
                 <input type="text" id="logourl" name="logourl" placeholder="Image url">
                 <input type="file" id="logofile" name="logo_file" class="file-input" accept=".jpg, .jpeg, .png">
+                <div class="slider-wrapper">
+                  <label>Logo Scale</label>
+                  <div class="slider-container">
+                    <input type='range' min="1" max="100" value="100" id="addSlider" class="slider">
+                    <div id="slider-preview-two">100%</div>
+                  </div>
+                </div>
                 <input type="button" id="Submit" value="Submit">
               </form>
             </div>

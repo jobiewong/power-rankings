@@ -1,4 +1,16 @@
 var ele = document.getElementById('sel')
+var logoScale = 75;
+
+// Logo slider
+let slider = document.getElementById("presetSlider");
+var sliderPreview = document.getElementById('slider-preview');
+
+slider.addEventListener('input', e => {
+    sliderPreview.innerHTML = e.target.value + "%";
+    logoScale = e.target.value;
+})
+
+// Functions
 
 function importTeamJson(file) {
     const array = [];
@@ -93,26 +105,34 @@ function addTeamPreset() {
     bg_col = parsed[2];
     url = parsed[3];
 
-  const itemDiv = document.createElement("div");
-  itemDiv.className = "item";
-  const itemLogo = document.createElement("div");
-  itemLogo.className = "item-logo";
-  const itemText = document.createElement("div");
-  itemText.className = "item-text";
+    const itemDiv = document.createElement("div");
+    itemDiv.className = "item";
+    const itemLogo = document.createElement("div");
+    itemLogo.className = "item-logo";
+    const itemText = document.createElement("div");
+    itemText.className = "item-text";
 
-  itemDiv.appendChild(itemLogo)
-  itemDiv.appendChild(itemText)
-  itemText.innerText = team_name;
-  itemText.style.color = tex_col;
-  itemDiv.style.backgroundColor = bg_col;
+    itemDiv.appendChild(itemLogo)
+    itemDiv.appendChild(itemText)
+    itemText.innerText = team_name;
+    itemText.style.color = tex_col;
+    itemDiv.style.backgroundColor = bg_col;
 
-  logourl = "url(assets/preset_logos/" + url + ")"
-  itemLogo.style.backgroundImage = logourl;
+    logourl = "url(assets/preset_logos/" + url + ")"
+    itemLogo.style.backgroundImage = logourl;
 
-  document.getElementById("overflowwrapper").appendChild(itemDiv);
+   
+    logoSize = ((logoScale/100) * 60) + "px"
+    itemLogo.style.backgroundSize = logoSize;
 
-  $(".settings-container").removeClass('show');
-  $(".settings-container").addClass('hidden');
+
+    document.getElementById("overflowwrapper").appendChild(itemDiv);
+
+    slider.value = "75";
+    sliderPreview.innerHTML = "75%";
+
+    $(".settings-container").removeClass('show');
+    $(".settings-container").addClass('hidden');
 }
 
 document.onload = loadTeamJson()

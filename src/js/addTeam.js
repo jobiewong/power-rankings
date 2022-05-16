@@ -2,6 +2,19 @@ logoFile = "";
 
 document.getElementById('logofile').addEventListener('change', readURL, true);
 
+var logoScaleAdd = 100;
+
+// Logo slider
+let sliderAdd = document.getElementById("addSlider")
+var sliderPreviewAdd = document.getElementById('slider-preview-two')
+
+sliderAdd.addEventListener('input', e => {
+  sliderPreviewAdd.innerHTML = e.target.value + "%";
+  logoScaleAdd = e.target.value
+})
+
+//////
+
 function readURL(){
   var file = document.getElementById("logofile").files[0];
   var file_path = file.path;
@@ -57,7 +70,14 @@ function addTeam(file) {
     itemLogo.style.backgroundImage = logourl;
   }
 
+  logoSize = ((logoScaleAdd/100) * 60) + "px"
+
+  itemLogo.style.backgroundSize = logoSize;
+
   document.getElementById("overflowwrapper").appendChild(itemDiv);
+
+  sliderAdd.value = "100";
+  sliderPreviewAdd.innerHTML = "100%";
 
   $(".settings-container").removeClass('show');
   $(".settings-container").addClass('hidden');
