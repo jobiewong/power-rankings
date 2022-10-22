@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.platchatText {
+    color: #6dc5c7;
+}
+
+.platchatBg {
+    background-color: #6dc5c7;
+}
