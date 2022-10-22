@@ -12,8 +12,10 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4 bg-[#2c2c2d]">
-        <h2 className="uppercase font-light text-3xl platchatText">Plat Chat Valorant</h2>
-        <h1 className="uppercase font-bold text-5xl text-white">Power Rankings</h1>
+        <div className="mb-10 flex flex-col items-center">
+          <h2 className="uppercase font-light text-3xl platchatText">Plat Chat Valorant</h2>
+          <h1 className="uppercase font-bold text-5xl text-white">Power Rankings</h1>
+        </div>
         <Rankings />
       </main>
     </>
