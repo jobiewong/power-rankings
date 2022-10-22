@@ -1,8 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { DragDropContext } from 'react-beautiful-dnd';
 import Rankings from "../components/Rankings";
  
 const Home: NextPage = () => {
+
+ function onDragEnd(result) {
+  //
+ }
+
   return (
     <>
       <Head>
@@ -16,7 +22,9 @@ const Home: NextPage = () => {
           <h2 className="uppercase font-light text-3xl platchatText">Plat Chat Valorant</h2>
           <h1 className="uppercase font-bold text-5xl text-white">Power Rankings</h1>
         </div>
-        <Rankings />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Rankings />
+        </DragDropContext>
       </main>
     </>
   );

@@ -1,23 +1,28 @@
 import React from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import initialTeams from '../data/initial-data.mjs';
 import Card from './Card';
 
 const Rankings = () => {
     const teams = initialTeams.teams;
 
+    // function to calculate the length of the team list
+
     function objectLength(obj : any) {
         let result = 0;
         for(const prop in obj) {
           if (obj.hasOwnProperty(prop)) {
-          // or Object.prototype.hasOwnProperty.call(obj, prop)
             result++;
           }
         }
         return result;
       }
 
+    // set list length to match team list length
+
     const listLength = objectLength(teams)
-    
+
+    // generate list numbers based on team list length
 
     const numbers = [];
     for (let i = 1; i <= listLength; i++) {
@@ -31,14 +36,13 @@ const Rankings = () => {
                 <div className="absolute lg:columns-2 gap-0 w-[66vw]">
                     {numbers.map((number) => 
                     <Numbers key={number} number={number} />)}
-                </div> 
-                <div className="">
-                    {initialTeams.columns['list-main'].teamIds.map((teamId) => 
-                    <Card key={teamId} team={teams[teamId]} />
+                </div>
+                <div>
+                    {initialTeams.columns['list-main'].teamIds.map((teamId, index) =>    
+                        <Card key={teamId} team={teams[teamId]} index={index}/>
                     )}
                 </div>
-            </div>
-            
+            </div>  
         </div>
         </>
     )
