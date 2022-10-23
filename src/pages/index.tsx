@@ -1,14 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext } from "react-beautiful-dnd";
 import Rankings from "../components/Rankings";
- 
+import { DataList } from "../data/Context";
+
 const Home: NextPage = () => {
-
- function onDragEnd(result) {
-  //
- }
-
   return (
     <>
       <Head>
@@ -17,14 +13,18 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4 bg-[#2c2c2d]">
+      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center bg-[#2c2c2d] p-4">
         <div className="mb-10 flex flex-col items-center">
-          <h2 className="uppercase font-light text-3xl platchatText">Plat Chat Valorant</h2>
-          <h1 className="uppercase font-bold text-5xl text-white">Power Rankings</h1>
+          <h2 className="platchatText text-3xl font-light uppercase">
+            Plat Chat Valorant
+          </h2>
+          <h1 className="text-5xl font-bold uppercase text-white">
+            Power Rankings
+          </h1>
         </div>
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DataList>
           <Rankings />
-        </DragDropContext>
+        </DataList>
       </main>
     </>
   );

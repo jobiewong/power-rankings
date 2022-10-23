@@ -1,13 +1,12 @@
 import React from "react";
 import initialTeams from "../data/initial-data.mjs";
+import Form from "./Form";
 import RankingsList from "./RankingsList";
 
 const Rankings = () => {
   // set list length to match team list length
 
-  const listLength = Object.keys(
-    initialTeams.columns["list-main"].teamIds
-  ).length;
+  const listLength = Object.keys(initialTeams.teams).length;
 
   // generate list numbers based on team list length
 
@@ -19,12 +18,13 @@ const Rankings = () => {
   return (
     <>
       <div className="w-[66vw] bg-zinc-800">
-        <div className="gap-0 lg:columns-2">
-          <div className="pointer-events-none absolute w-[66vw] gap-0 lg:columns-2">
+        <div className="gap-0 ">
+          <div className="pointer-events-none absolute w-[66vw] gap-0 ">
             {numbers.map((number) => (
               <Numbers key={number} number={number} />
             ))}
           </div>
+          {/* <Form /> */}
           <RankingsList />
         </div>
       </div>

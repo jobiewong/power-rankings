@@ -1,41 +1,33 @@
+import React, { useContext } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DataContext } from "../data/Context";
 import initialTeams from "../data/initial-data.mjs";
 import Card from "./Card";
 
 const RankingsList = () => {
-  const teamsInfo = initialTeams.teams;
+  const [data, setData] = useContext(DataContext);
 
-  const onDragEnd = (result) => {
-    // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
-
-    const items = reorder(
-      this.state.items,
-      result.source.index,
-      result.destination.index
-    );
-
-    this.setState({
-      items,
-    });
+  const handleEnd = (result: any) => {
+    const items = Array.from(data);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setData(items);
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={handleEnd}>
       <Droppable droppableId="droppable">
         {(provided, snapshot) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            {initialTeams.columns["list-main"].teamIds.map((teamId, index) => (
-              <Draggable key={teamId} draggableId={teamId} index={index}>
+            {data.map((team: any, index: string) => (
+              <Draggable key={team.id} draggableId={team.id} index={index}>
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <Card key={teamId} team={teamsInfo[teamId]} index={index} />
+                    <Card key={team.id} team={team} index={index} />
                   </div>
                 )}
               </Draggable>
