@@ -1,64 +1,48 @@
-import React from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import initialTeams from '../data/initial-data.mjs';
-import Card from './Card';
+import React from "react";
+import initialTeams from "../data/initial-data.mjs";
+import RankingsList from "./RankingsList";
 
 const Rankings = () => {
-    const teams = initialTeams.teams;
+  // set list length to match team list length
 
-    // function to calculate the length of the team list
+  const listLength = Object.keys(
+    initialTeams.columns["list-main"].teamIds
+  ).length;
 
-    function objectLength(obj : any) {
-        let result = 0;
-        for(const prop in obj) {
-          if (obj.hasOwnProperty(prop)) {
-            result++;
-          }
-        }
-        return result;
-      }
+  // generate list numbers based on team list length
 
-    // set list length to match team list length
+  const numbers = [];
+  for (let i = 1; i <= listLength; i++) {
+    numbers.push(i);
+  }
 
-    const listLength = objectLength(teams)
-
-    // generate list numbers based on team list length
-
-    const numbers = [];
-    for (let i = 1; i <= listLength; i++) {
-        numbers.push(i);
-    }
-
-    return (
-        <>
-        <div className="w-[66vw] bg-zinc-800">
-            <div className="lg:columns-2 gap-0">
-                <div className="absolute lg:columns-2 gap-0 w-[66vw]">
-                    {numbers.map((number) => 
-                    <Numbers key={number} number={number} />)}
-                </div>
-                <div>
-                    {initialTeams.columns['list-main'].teamIds.map((teamId, index) =>    
-                        <Card key={teamId} team={teams[teamId]} index={index}/>
-                    )}
-                </div>
-            </div>  
+  return (
+    <>
+      <div className="w-[66vw] bg-zinc-800">
+        <div className="gap-0 lg:columns-2">
+          <div className="pointer-events-none absolute w-[66vw] gap-0 lg:columns-2">
+            {numbers.map((number) => (
+              <Numbers key={number} number={number} />
+            ))}
+          </div>
+          <RankingsList />
         </div>
-        </>
-    )
+      </div>
+    </>
+  );
 };
 
 export default Rankings;
 
 type numbersProps = {
-    number: number
-}
+  number: number;
+};
 
 // define numbers component
-const Numbers = ({number}: numbersProps) => {
-    return(
-        <div className="relative h-16 flex items-center mb-4 justify-center font-black text-2xl w-14 bg-blue-500/10">
-            {number}
-        </div>
-    )
-}
+const Numbers = ({ number }: numbersProps) => {
+  return (
+    <div className="relative mb-4 flex h-16 w-14 items-center justify-center bg-blue-500/10 text-2xl font-black">
+      {number}
+    </div>
+  );
+};
