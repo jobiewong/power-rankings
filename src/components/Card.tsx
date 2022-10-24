@@ -20,7 +20,7 @@ const Card = (props: any) => {
       style={style}
       {...attributes}
       {...listeners}
-      className="mb-4 flex h-16 w-full flex-row bg-green-500/10 pl-14"
+      className="mb-4 flex h-16 w-full flex-row pl-14"
     >
       <div className="flex w-full flex-row rounded-sm bg-black text-white">
         <div className=" flex h-full w-16 flex-col items-center justify-center bg-zinc-400">

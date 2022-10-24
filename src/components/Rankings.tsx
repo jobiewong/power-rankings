@@ -17,7 +17,7 @@ const Rankings = () => {
 
   return (
     <>
-      <div className="w-[66vw] bg-zinc-800">
+      <div className="w-[66vw]">
         <div className="columns-2 gap-0">
           <div className="pointer-events-none absolute w-[66vw] columns-2 gap-0 ">
             {numbers.map((number) => (
@@ -41,7 +41,7 @@ type numbersProps = {
 // define numbers component
 const Numbers = ({ number }: numbersProps) => {
   return (
-    <div className="relative mb-4 flex h-16 w-14 items-center justify-center bg-blue-500/10 text-2xl font-black">
+    <div className="relative mb-4 flex h-16 w-14 items-center justify-center text-2xl font-black">
       {number}
     </div>
   );
