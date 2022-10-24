@@ -1,42 +1,59 @@
-import React, { useContext } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import React, { useContext, useState } from "react";
+// import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { DataContext } from "../data/Context";
 import initialTeams from "../data/initial-data.mjs";
 import Card from "./Card";
+import { SortableItem } from "./SortableItem";
 
 const RankingsList = () => {
   const [data, setData] = useContext(DataContext);
 
-  const handleEnd = (result: any) => {
-    const items = Array.from(data);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setData(items);
-  };
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  function handleEnd(event) {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      setData((data) => {
+        const oldIndex = data.indexOf(active.id);
+        const newIndex = data.indexOf(over.id);
+
+        return arrayMove(data, oldIndex, newIndex);
+      });
+    }
+  }
 
   return (
-    <DragDropContext onDragEnd={handleEnd}>
-      <Droppable droppableId="droppable">
-        {(provided, snapshot) => (
-          <div {...provided.droppableProps} ref={provided.innerRef}>
-            {data.map((team: any, index: string) => (
-              <Draggable key={team.id} draggableId={team.id} index={index}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <Card key={team.id} team={team} index={index} />
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleEnd}
+    >
+      <SortableContext items={data} strategy={verticalListSortingStrategy}>
+        {data.map((team: any, index: string) => (
+          <Card key={team.id} team={team} id={index} />
+        ))}
+      </SortableContext>
+    </DndContext>
   );
 };
 
