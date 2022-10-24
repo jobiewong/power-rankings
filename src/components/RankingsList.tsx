@@ -22,6 +22,13 @@ import { SortableItem } from "./SortableItem";
 const RankingsList = () => {
   const [data, setData] = useContext(DataContext);
 
+  const teamArray = Object.keys(data).map((key) => {
+    return data[key].id;
+  });
+
+  console.log(teamArray);
+  console.log(data);
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -34,10 +41,16 @@ const RankingsList = () => {
 
     if (active.id !== over.id) {
       setData((data) => {
-        const oldIndex = data.indexOf(active.id);
-        const newIndex = data.indexOf(over.id);
+        const oldIndex = teamArray.indexOf(active.id);
+        const newIndex = teamArray.indexOf(over.id);
 
-        return arrayMove(data, oldIndex, newIndex);
+        const modifiedArray = arrayMove(teamArray, oldIndex, newIndex);
+
+        const sorted = [...data].sort(
+          (a, b) => modifiedArray.indexOf(a.id) - modifiedArray.indexOf(b.id)
+        );
+
+        return sorted;
       });
     }
   }
@@ -48,9 +61,9 @@ const RankingsList = () => {
       collisionDetection={closestCenter}
       onDragEnd={handleEnd}
     >
-      <SortableContext items={data} strategy={verticalListSortingStrategy}>
-        {data.map((team: any, index: string) => (
-          <Card key={team.id} team={team} id={index} />
+      <SortableContext items={teamArray} strategy={verticalListSortingStrategy}>
+        {data.map((team) => (
+          <Card key={team.id} id={team.id} team={team} />
         ))}
       </SortableContext>
     </DndContext>

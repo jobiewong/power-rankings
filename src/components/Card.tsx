@@ -5,8 +5,7 @@ import React from "react";
 type CardProps = { team: string };
 
 const Card = (props: any) => {
-  console.log(props);
-
+  // console.log(props);
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
 
@@ -28,7 +27,7 @@ const Card = (props: any) => {
           logo
         </div>
         <div className="flex items-center px-4 text-2xl font-black uppercase">
-          {props.name}
+          {props.team.name}
         </div>
       </div>
     </div>
