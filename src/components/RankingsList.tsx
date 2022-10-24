@@ -40,13 +40,13 @@ const RankingsList = () => {
     const { active, over } = event;
 
     if (active.id !== over.id) {
-      setData((data) => {
+      setData((currData) => {
         const oldIndex = teamArray.indexOf(active.id);
         const newIndex = teamArray.indexOf(over.id);
 
         const modifiedArray = arrayMove(teamArray, oldIndex, newIndex);
 
-        const sorted = [...data].sort(
+        const sorted = [...currData].sort(
           (a, b) => modifiedArray.indexOf(a.id) - modifiedArray.indexOf(b.id)
         );
 

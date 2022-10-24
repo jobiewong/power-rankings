@@ -18,8 +18,8 @@ const Rankings = () => {
   return (
     <>
       <div className="w-[66vw] bg-zinc-800">
-        <div className="gap-0 ">
-          <div className="pointer-events-none absolute w-[66vw] gap-0 ">
+        <div className="columns-2 gap-0">
+          <div className="pointer-events-none absolute w-[66vw] columns-2 gap-0 ">
             {numbers.map((number) => (
               <Numbers key={number} number={number} />
             ))}
