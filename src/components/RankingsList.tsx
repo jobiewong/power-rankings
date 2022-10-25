@@ -1,5 +1,3 @@
-import React, { useContext, useState } from "react";
-// import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import {
   closestCenter,
   DndContext,
@@ -14,10 +12,9 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import React, { useContext } from "react";
 import { DataContext } from "../data/Context";
-import initialTeams from "../data/initial-data.mjs";
 import Card from "./Card";
-import { SortableItem } from "./SortableItem";
 
 const RankingsList = () => {
   const [data, setData] = useContext(DataContext);
@@ -25,9 +22,6 @@ const RankingsList = () => {
   const teamArray = Object.keys(data).map((key) => {
     return data[key].id;
   });
-
-  console.log(teamArray);
-  console.log(data);
 
   const sensors = useSensors(
     useSensor(PointerSensor),

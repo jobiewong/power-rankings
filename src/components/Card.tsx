@@ -5,7 +5,6 @@ import React from "react";
 type CardProps = { team: string };
 
 const Card = (props: any) => {
-  // console.log(props);
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
 
@@ -13,6 +12,8 @@ const Card = (props: any) => {
     transform: CSS.Transform.toString(transform),
     transition,
   };
+
+  console.log(props.team.bgCol);
 
   return (
     <div
@@ -22,7 +23,13 @@ const Card = (props: any) => {
       {...listeners}
       className="mb-4 flex h-16 w-full flex-row pl-14"
     >
-      <div className="flex w-full flex-row rounded-sm bg-black text-white">
+      <div
+        className={`flex w-full flex-row rounded-sm`}
+        style={{
+          color: props.team.textCol,
+          backgroundColor: props.team.bgCol,
+        }}
+      >
         <div className=" flex h-full w-16 flex-col items-center justify-center bg-zinc-400">
           logo
         </div>
