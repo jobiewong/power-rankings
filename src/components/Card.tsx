@@ -7,17 +7,26 @@ type CardProps = { team: string };
 
 const Card = (props: any) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useSortable({ id: props.id });
+    useSortable({ id: props.id, transition: null });
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition: null,
   };
+
+  // const baseStyles: React.CSSProperties = {
+  //   position: "relative",
+  // };
+
+  // const initialStyles = {
+  //   set: {
+  //     x: 0,
+  //     y: 0,
+  //     scale: 1,
+  //   },
+  // };
 
   const baseStyles: React.CSSProperties = {
     position: "relative",
-    width: 140,
-    height: 140,
   };
 
   const initialStyles = {
@@ -26,13 +35,14 @@ const Card = (props: any) => {
     scale: 1,
   };
 
+  const stylesItem = "mb-4 flex h-16 w-full flex-row pl-14";
+
   return (
     <motion.div
+      className={stylesItem}
+      style={baseStyles}
       ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className="mb-4 flex h-16 w-full flex-row pl-14"
+      layoutId={props.id}
       animate={
         transform
           ? {
@@ -58,6 +68,8 @@ const Card = (props: any) => {
           delay: isDragging ? 0 : 0.25,
         },
       }}
+      {...attributes}
+      {...listeners}
     >
       <div
         className={`flex w-full flex-row rounded-sm`}
