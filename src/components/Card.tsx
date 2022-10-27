@@ -50,9 +50,6 @@ const Card = (props: any) => {
               y: transform.y,
               scale: isDragging ? 1.05 : 1,
               zIndex: isDragging ? 1 : 0,
-              boxShadow: isDragging
-                ? "0 0 0 1px rgba(63, 63, 68, 0.05), 0px 15px 15px 0 rgba(34, 33, 81, 0.25)"
-                : undefined,
             }
           : initialStyles
       }
@@ -71,20 +68,37 @@ const Card = (props: any) => {
       {...attributes}
       {...listeners}
     >
-      <div
+      <motion.div
         className={`flex w-full flex-row rounded-sm`}
         style={{
           color: props.team.textCol,
           backgroundColor: props.team.bgCol,
         }}
+        animate={
+          transform
+            ? {
+                boxShadow: isDragging
+                  ? "0 0 0 1px rgba(63, 63, 68, 0.05), 0px 15px 15px 0 rgba(0, 0, 0, 0.25)"
+                  : undefined,
+              }
+            : initialStyles
+        }
+        transition={{
+          duration: !isDragging ? 0.25 : 0,
+          easings: {
+            type: "spring",
+          },
+        }}
+        {...attributes}
+        {...listeners}
       >
-        <div className=" flex h-full w-16 flex-col items-center justify-center bg-zinc-400">
+        <div className="flex h-full w-16 flex-col items-center justify-center rounded-l-sm bg-zinc-400">
           logo
         </div>
         <div className="flex items-center px-4 text-2xl font-black uppercase">
           {props.team.name}
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
