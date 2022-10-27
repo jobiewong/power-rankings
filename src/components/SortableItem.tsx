@@ -4,7 +4,6 @@ import React from "react";
 import Card from "./Card";
 
 export function SortableItem(props) {
-  console.log(props);
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
 

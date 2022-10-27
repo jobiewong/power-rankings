@@ -1,6 +1,6 @@
+import { motion } from "framer-motion";
 import React from "react";
 import initialTeams from "../data/initial-data.mjs";
-import Form from "./Form";
 import RankingsList from "./RankingsList";
 
 const Rankings = () => {
@@ -24,8 +24,12 @@ const Rankings = () => {
               <Numbers key={number} number={number} index={index} />
             ))}
           </div>
-          {/* <Form /> */}
           <RankingsList />
+          <div className="initialiseTailwindColours hidden">
+            <div className="bg-[#CBAE39]"></div>
+            <div className="bg-[#D8D8D8]"></div>
+            <div className="bg-[#CBAE39]"></div>
+          </div>
         </div>
       </div>
     </>
@@ -39,29 +43,43 @@ type numbersProps = {
   index: number;
 };
 
+const variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 25,
+    transition: { delay: custom * 0.2, damping: 5, type: "spring" },
+  }),
+};
+
 // define numbers component
 const Numbers = ({ number, index }: numbersProps) => {
   return (
     <div className="relative mb-4 flex h-16 w-14 flex-col items-center justify-center text-2xl font-black text-white">
       {number}
-      {index === 0 && (
-        <div className="absolute flex translate-y-6 flex-col items-center">
-          <div className="mb-1 h-[.2rem] w-8 bg-[#CBAE39]" />
-          <div className="h-[.2rem] w-5 bg-[#CBAE39]" />
-        </div>
-      )}
-      {index === 1 && (
-        <div className="absolute flex translate-y-6 flex-col items-center">
-          <div className="mb-1 h-[.2rem] w-8 bg-[#D8D8D8]" />
-          <div className="h-[.2rem] w-5 bg-[#D8D8D8]" />
-        </div>
-      )}
-      {index === 2 && (
-        <div className="absolute flex translate-y-6 flex-col items-center">
-          <div className="mb-1 h-[.2rem] w-8 bg-[#AC8A61]" />
-          <div className="h-[.2rem] w-5 bg-[#AC8A61]" />
-        </div>
-      )}
+      {index === 0 && <Underline colour="#CBAE39" iter={index} />}
+      {index === 1 && <Underline colour="#D8D8D8" iter={index} />}
+      {index === 2 && <Underline colour="#CBAE39" iter={index} />}
     </div>
+  );
+};
+
+const Underline = (props: { colour: string; iter: number }) => {
+  const colour = props.colour;
+
+  return (
+    <motion.div
+      className="absolute flex translate-y-6 flex-col items-center"
+      variants={variants}
+      custom={props.iter}
+      initial={"hidden"}
+      animate={"visible"}
+      transition={{
+        delay: 100,
+      }}
+    >
+      <div className={`mb-1 h-[.2rem] w-8 bg-[${colour}]`} />
+      <div className={`h-[.2rem] w-5 bg-[${colour}]`} />
+    </motion.div>
   );
 };
