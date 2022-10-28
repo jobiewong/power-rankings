@@ -35,6 +35,7 @@ const RankingsList = () => {
 
     if (active.id !== over.id) {
       setData((currData) => {
+        // update Data with new array order
         const oldIndex = teamArray.indexOf(active.id);
         const newIndex = teamArray.indexOf(over.id);
 
@@ -43,7 +44,6 @@ const RankingsList = () => {
         const sorted = [...currData].sort(
           (a, b) => modifiedArray.indexOf(a.id) - modifiedArray.indexOf(b.id)
         );
-
         return sorted;
       });
     }

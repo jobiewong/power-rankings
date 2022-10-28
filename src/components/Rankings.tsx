@@ -17,7 +17,7 @@ const Rankings = () => {
 
   return (
     <>
-      <div className="w-[66vw]">
+      <div className="relative z-10 w-[75vw] lg:w-[64rem]">
         <div className="columns-2 gap-0">
           <div className="pointer-events-none absolute w-[66vw] columns-2 gap-0 ">
             {numbers.map((number, index) => (
@@ -53,6 +53,7 @@ const variants = {
 };
 
 // define numbers component
+
 const Numbers = ({ number, index }: numbersProps) => {
   return (
     <div className="relative mb-4 flex h-16 w-14 flex-col items-center justify-center text-2xl font-black text-white">

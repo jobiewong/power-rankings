@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Rankings from "../components/Rankings";
+import Settings from "../components/Settings";
 import { DataList } from "../data/Context";
 
 const Home: NextPage = () => {
@@ -18,6 +19,11 @@ const Home: NextPage = () => {
             <h2 className="platchatText text-3xl font-light uppercase">
               Plat Chat Valorant
             </h2>
+            <div className="relative my-2 w-[110%] flex-row justify-center">
+              <div className="triangle absolute left-0 -translate-y-[45%]" />
+              <div className="absolute top-0 h-[.1rem] w-full bg-white" />
+              <div className="triangle absolute right-0 top-0 -translate-y-[45%] rotate-180" />
+            </div>
             <h1 className="text-5xl font-bold uppercase text-white">
               Power Rankings
             </h1>
@@ -26,6 +32,9 @@ const Home: NextPage = () => {
             <Rankings />
           </DataList>
         </main>
+        <div className="">
+          <Settings />
+        </div>
       </div>
     </>
   );

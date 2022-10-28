@@ -9,3 +9,11 @@
 .platchatBg {
     background-color: #6dc5c7;
 }
+
+.triangle {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 8px 0 8px 13.9px;
+    border-color: transparent transparent transparent #ffffff;
+ }
