@@ -13,7 +13,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { DataContext } from "../data/Context";
 import initialTeams from "../data/initial-data";
 import { teamProps } from "../data/team-type";
@@ -40,6 +40,8 @@ const RankingsContainer = () => {
     return data[key].id;
   });
 
+  const [isDragging, setIsDragging] = useState(false);
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -48,6 +50,7 @@ const RankingsContainer = () => {
   );
 
   function handleEnd(event: any) {
+    setIsDragging(false);
     const { active, over } = event;
 
     if (active.id !== over.id) {
@@ -72,6 +75,7 @@ const RankingsContainer = () => {
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
+          onDragStart={() => setIsDragging(true)}
           onDragEnd={handleEnd}
         >
           <div className="columns-2 gap-0">
@@ -92,7 +96,9 @@ const RankingsContainer = () => {
               <div className="bg-[#CBAE39]"></div>
             </div>
           </div>
-          <OverflowList />
+          <OverflowList key={"overflow"} id={"overflow"} dragging={isDragging}>
+            {/* {parent === id ? item : null} */}
+          </OverflowList>
         </DndContext>
       </div>
     </>
