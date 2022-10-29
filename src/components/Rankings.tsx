@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
-import initialTeams from "../data/initial-data.mjs";
+import initialTeams from "../data/initial-data";
 import RankingsList from "./RankingsList";
 
 const Rankings = () => {

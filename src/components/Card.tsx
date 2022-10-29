@@ -1,5 +1,4 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -7,7 +6,9 @@ type CardProps = { team: string };
 
 const Card = (props: any) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useSortable({ id: props.id, transition: null });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    useSortable({ id: props.id, transition: null }); // error created by tsconfig jsx: preserve which is set automatically by nextjs
 
   const baseStyles: React.CSSProperties = {
     position: "relative",

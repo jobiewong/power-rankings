@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import initialTeams from "../data/initial-data.mjs";
-import teamData from "../data/team-data.mjs";
+import React, { createContext, useEffect, useState } from "react";
+import initialTeams from "./initial-data";
+import teamData from "./team-data";
 
-export const DataContext = React.createContext([]);
-
-type team = {
+type teamProps = {
   id: string;
   name: string;
   bgCol: string;
   textCol: string;
 };
+
+export const DataContext = createContext<any[] | null>(null);
 
 export function DataList(props: any) {
   // map team objects from team data using keys from initial teams
@@ -18,19 +18,18 @@ export function DataList(props: any) {
     return obj;
   }, {});
 
-  console.log(items, "items");
-
   // deconstruct objects
   const itemsArray = Object.keys(items).map((key) => {
     return items[key];
   });
 
   // define data state
-  const [data, setData] = useState(itemsArray);
+  const [data, setData] = useState<any>(itemsArray);
 
   useEffect(() => {
     console.log(data);
   }, [data]);
+
   return (
     <DataContext.Provider value={[data, setData]}>
       {props.children}

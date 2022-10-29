@@ -1,28 +1,28 @@
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Settings = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="">
       <motion.div
-        className="fixed bottom-0 right-0 z-50 mb-6 mr-6 cursor-pointer"
+        className="z-60 fixed bottom-0 right-0 mb-6 mr-6 cursor-pointer"
         animate={{ opacity: 0.3 }}
         whileHover={{ rotate: -45, opacity: 1 }}
       >
-        <SettingsIcon />
+        <SettingsIcon click={() => setOpen(!open)} />
       </motion.div>
-      <div className="fixed top-0 left-0 z-50 flex h-full w-full flex-col items-center justify-center">
-        <div className="relative h-[64%] max-h-[42rem] w-[40%] max-w-[32rem] rounded-sm bg-white p-4 shadow-lg"></div>
-      </div>
+      {open && <SettingsPopup />}
     </div>
   );
 };
 
 export default Settings;
 
-const SettingsIcon = () => {
+const SettingsIcon = ({ click }: { click: any }) => {
   return (
-    <div className="text-white">
+    <div className="text-white" onClick={click}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -63,6 +63,16 @@ const CloseIcon = () => {
           d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         />
       </svg>
+    </div>
+  );
+};
+
+const SettingsPopup = () => {
+  return (
+    <div className="pointer-events-none fixed top-0 left-0 z-50 flex h-full w-full flex-col items-center justify-center">
+      <div className="pointer-events-auto relative h-[64%] max-h-[42rem] w-[40%] max-w-[32rem] rounded-sm bg-white p-4 shadow-lg">
+        <div className="hover:bg-red-500">test</div>
+      </div>
     </div>
   );
 };
