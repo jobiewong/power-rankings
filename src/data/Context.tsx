@@ -2,13 +2,6 @@ import React, { createContext, useEffect, useState } from "react";
 import initialTeams from "./initial-data";
 import teamData from "./team-data";
 
-type teamProps = {
-  id: string;
-  name: string;
-  bgCol: string;
-  textCol: string;
-};
-
 export const DataContext = createContext<any[] | null>(null);
 
 export function DataList(props: any) {

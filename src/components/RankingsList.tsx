@@ -14,9 +14,12 @@ import {
 } from "@dnd-kit/sortable";
 import React, { useContext } from "react";
 import { DataContext } from "../data/Context";
+import { teamProps } from "../data/team-type";
 import Card from "./Card";
 
 const RankingsList = () => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const [data, setData] = useContext(DataContext);
 
   const teamArray = Object.keys(data).map((key) => {
@@ -30,11 +33,11 @@ const RankingsList = () => {
     })
   );
 
-  function handleEnd(event) {
+  function handleEnd(event: any) {
     const { active, over } = event;
 
     if (active.id !== over.id) {
-      setData((currData) => {
+      setData((currData: teamProps[]) => {
         // update Data with new array order
         const oldIndex = teamArray.indexOf(active.id);
         const newIndex = teamArray.indexOf(over.id);
@@ -56,7 +59,7 @@ const RankingsList = () => {
       onDragEnd={handleEnd}
     >
       <SortableContext items={teamArray} strategy={verticalListSortingStrategy}>
-        {data.map((team) => (
+        {data.map((team: teamProps) => (
           <Card key={team.id} id={team.id} team={team} />
         ))}
       </SortableContext>
