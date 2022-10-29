@@ -11,6 +11,8 @@ const teamData = {
         'furia': { id: 'furia', name: 'Furia', bgCol: '#040404', textCol: '#FFFFFF' },
         'leviatan': { id: 'leviatan', name: 'Leviatan', bgCol: '#6cacdc', textCol: '#000000' },
         'fnatic': { id: 'fnatic', name: 'Fnatic', bgCol: '#fc5c04', textCol: '#000000' },
+        'hgvs':   { id: "hgvs", name: "HGVs", bgCol: "#e92424", textCol: "#FFFFFF" },
+        'platchat': { id: "platchat", name: "Plat Chat", bgCol: "#cc0434", textCol: "#FFFFFF" },
     }
 };
 

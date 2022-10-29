@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import React from "react";
 import initialTeams from "../data/initial-data";
+import OverflowList from "./OverflowList";
 import RankingsList from "./RankingsList";
 
-const Rankings = () => {
+const RankingsContainer = () => {
   // set list length to match team list length
 
   const listLength = Object.keys(initialTeams.teams).length;
@@ -19,12 +20,13 @@ const Rankings = () => {
     <>
       <div className="relative z-10 w-[75vw] lg:w-[64rem]">
         <div className="columns-2 gap-0">
-          <div className="pointer-events-none absolute w-[66vw] columns-2 gap-0 ">
+          <div className="pointer-events-none absolute  w-[75vw] columns-2 gap-0 lg:w-[64rem] ">
             {numbers.map((number, index) => (
               <Numbers key={number} number={number} index={index} />
             ))}
           </div>
           <RankingsList />
+          {/* <OverflowList /> */}
           <div className="initialiseTailwindColours hidden">
             <div className="bg-[#CBAE39]"></div>
             <div className="bg-[#D8D8D8]"></div>
@@ -36,7 +38,7 @@ const Rankings = () => {
   );
 };
 
-export default Rankings;
+export default RankingsContainer;
 
 type numbersProps = {
   number: number;

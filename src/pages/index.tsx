@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Rankings from "../components/Rankings";
+import RankingsContainer from "../components/RankingsContainer";
 import Settings from "../components/Settings";
 import { DataList } from "../data/Context";
 
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
             </h1>
           </div>
           <DataList>
-            <Rankings />
+            <RankingsContainer />
           </DataList>
         </main>
         <div className="">
