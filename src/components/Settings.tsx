@@ -9,7 +9,7 @@ const Settings = () => {
       <motion.div
         className="z-60 fixed bottom-0 right-0 mb-6 mr-6 cursor-pointer"
         animate={{ opacity: 0.3 }}
-        whileHover={{ rotate: -45, opacity: 1 }}
+        whileHover={{ rotate: 45, opacity: 1 }}
       >
         <SettingsIcon click={() => setOpen(!open)} />
       </motion.div>

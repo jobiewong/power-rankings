@@ -20,7 +20,7 @@ export function DataList(props: any) {
   const [data, setData] = useState<any>(itemsArray);
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
   }, [data]);
 
   return (

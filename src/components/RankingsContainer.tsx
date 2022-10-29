@@ -18,15 +18,14 @@ const RankingsContainer = () => {
 
   return (
     <>
-      <div className="relative z-10 w-[75vw] lg:w-[64rem]">
+      <div className="relative w-full">
         <div className="columns-2 gap-0">
-          <div className="pointer-events-none absolute  w-[75vw] columns-2 gap-0 lg:w-[64rem] ">
+          <div className="pointer-events-none absolute w-[75vw] columns-2 gap-0 lg:w-[64rem] ">
             {numbers.map((number, index) => (
               <Numbers key={number} number={number} index={index} />
             ))}
           </div>
           <RankingsList />
-          {/* <OverflowList /> */}
           <div className="initialiseTailwindColours hidden">
             <div className="bg-[#CBAE39]"></div>
             <div className="bg-[#D8D8D8]"></div>
