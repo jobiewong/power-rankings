@@ -32,7 +32,6 @@ const Home: NextPage = () => {
           <DataList>
             <div className="z-10 w-[75vw] lg:w-[64rem]">
               <RankingsContainer />
-              <OverflowList />
             </div>
           </DataList>
         </main>

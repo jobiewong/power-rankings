@@ -1,6 +1,22 @@
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useContext } from "react";
+import { DataContext } from "../data/Context";
 import initialTeams from "../data/initial-data";
+import { teamProps } from "../data/team-type";
 import OverflowList from "./OverflowList";
 import RankingsList from "./RankingsList";
 
@@ -16,22 +32,68 @@ const RankingsContainer = () => {
     numbers.push(i);
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const [data, setData] = useContext(DataContext);
+
+  const teamArray = Object.keys(data).map((key) => {
+    return data[key].id;
+  });
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  function handleEnd(event: any) {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      setData((currData: teamProps[]) => {
+        // update Data with new array order
+        const oldIndex = teamArray.indexOf(active.id);
+        const newIndex = teamArray.indexOf(over.id);
+
+        const modifiedArray = arrayMove(teamArray, oldIndex, newIndex);
+
+        const sorted = [...currData].sort(
+          (a, b) => modifiedArray.indexOf(a.id) - modifiedArray.indexOf(b.id)
+        );
+        return sorted;
+      });
+    }
+  }
+
   return (
     <>
       <div className="relative w-full">
-        <div className="columns-2 gap-0">
-          <div className="pointer-events-none absolute w-[75vw] columns-2 gap-0 lg:w-[64rem] ">
-            {numbers.map((number, index) => (
-              <Numbers key={number} number={number} index={index} />
-            ))}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleEnd}
+        >
+          <div className="columns-2 gap-0">
+            <div className="pointer-events-none absolute w-[75vw] columns-2 gap-0 lg:w-[64rem] ">
+              {numbers.map((number, index) => (
+                <Numbers key={number} number={number} index={index} />
+              ))}
+            </div>
+            <div className="w-full">
+              <div className="">
+                <RankingsList array={teamArray} dataObj={data} />
+              </div>
+            </div>
+
+            <div className="initialiseTailwindColours hidden">
+              <div className="bg-[#CBAE39]"></div>
+              <div className="bg-[#D8D8D8]"></div>
+              <div className="bg-[#CBAE39]"></div>
+            </div>
           </div>
-          <RankingsList />
-          <div className="initialiseTailwindColours hidden">
-            <div className="bg-[#CBAE39]"></div>
-            <div className="bg-[#D8D8D8]"></div>
-            <div className="bg-[#CBAE39]"></div>
-          </div>
-        </div>
+          <OverflowList />
+        </DndContext>
       </div>
     </>
   );

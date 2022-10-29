@@ -1,69 +1,23 @@
 import {
-  closestCenter,
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  arrayMove,
   SortableContext,
-  sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import React, { useContext } from "react";
-import { DataContext } from "../data/Context";
+import React from "react";
 import { teamProps } from "../data/team-type";
 import Card from "./Card";
 
-const RankingsList = () => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const [data, setData] = useContext(DataContext);
-
-  const teamArray = Object.keys(data).map((key) => {
-    return data[key].id;
-  });
-
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
-
-  function handleEnd(event: any) {
-    const { active, over } = event;
-
-    if (active.id !== over.id) {
-      setData((currData: teamProps[]) => {
-        // update Data with new array order
-        const oldIndex = teamArray.indexOf(active.id);
-        const newIndex = teamArray.indexOf(over.id);
-
-        const modifiedArray = arrayMove(teamArray, oldIndex, newIndex);
-
-        const sorted = [...currData].sort(
-          (a, b) => modifiedArray.indexOf(a.id) - modifiedArray.indexOf(b.id)
-        );
-        return sorted;
-      });
-    }
-  }
-
+const RankingsList = (props: any) => {
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleEnd}
-    >
-      <SortableContext items={teamArray} strategy={verticalListSortingStrategy}>
-        {data.map((team: teamProps) => (
+    <div>
+      <SortableContext
+        items={props.array}
+        strategy={verticalListSortingStrategy}
+      >
+        {props.dataObj.map((team: teamProps) => (
           <Card key={team.id} id={team.id} team={team} />
         ))}
       </SortableContext>
-    </DndContext>
+    </div>
   );
 };
 
