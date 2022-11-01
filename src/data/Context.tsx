@@ -11,13 +11,27 @@ export function DataList(props: any) {
     return obj;
   }, {});
 
+  const overflowItems = initialTeams.overflow.reduce(function (obj2, key2) {
+    if (teamData.teams.hasOwnProperty(key2)) obj2[key2] = teamData.teams[key2];
+    return obj2;
+  }, {});
+
   // deconstruct objects
   const itemsArray = Object.keys(items).map((key) => {
     return items[key];
   });
+  const overflowArray = Object.keys(items).map((key) => {
+    return overflowItems[key];
+  });
+
+  const totalItems = {
+    main: itemsArray,
+    overflow: [],
+  };
+  // console.log(initialTeams.overflow);
 
   // define data state
-  const [data, setData] = useState<any>(itemsArray);
+  const [data, setData] = useState<any>(totalItems);
 
   useEffect(() => {
     // console.log(data);

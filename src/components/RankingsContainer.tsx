@@ -1,49 +1,19 @@
 import {
-  CancelDrop,
   closestCenter,
-  CollisionDetection,
-  defaultDropAnimationSideEffects,
+  closestCorners,
   DndContext,
   DragOverlay,
-  DropAnimation,
-  getFirstCollision,
-  KeyboardCoordinateGetter,
   KeyboardSensor,
-  MeasuringStrategy,
-  Modifiers,
-  MouseSensor,
   PointerSensor,
-  pointerWithin,
-  rectIntersection,
-  TouchSensor,
-  UniqueIdentifier,
-  useDroppable,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import {
-  AnimateLayoutChanges,
-  arrayMove,
-  defaultAnimateLayoutChanges,
-  horizontalListSortingStrategy,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  SortingStrategy,
-  useSortable,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useState } from "react";
 import { DataContext } from "../data/Context";
 import initialTeams from "../data/initial-data";
 import { teamProps } from "../data/team-type";
-import { coordinateGetter as multipleContainersCoordinateGetter } from "../utils/multipleContainersKeyboardCoordinates";
 import OverflowList from "./OverflowList";
 import RankingsList from "./RankingsList";
 
@@ -62,10 +32,14 @@ const RankingsContainer = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const [data, setData] = useContext(DataContext);
+  const [activeId, setActiveId] = useState();
 
   // create array of ID's in data
-  const teamArray = Object.keys(data).map((key) => {
-    return data[key].id;
+  const mainArray = Object.keys(data.main).map((key) => {
+    return data.main[key].id;
+  });
+  const overflowArray = Object.keys(data.overflow).map((key) => {
+    return data.overflow[key].id;
   });
 
   const [isDragging, setIsDragging] = useState(false);
@@ -76,34 +50,163 @@ const RankingsContainer = () => {
     })
   );
 
-  function handleEnd(event: any) {
-    setIsDragging(false);
-    const { active, over } = event;
-
-    if (active.id !== over.id) {
-      setData((currData: teamProps[]) => {
-        // update Data with new array order
-        const oldIndex = teamArray.indexOf(active.id);
-        const newIndex = teamArray.indexOf(over.id);
-
-        const modifiedArray = arrayMove(teamArray, oldIndex, newIndex);
-
-        const sorted = [...currData].sort(
-          (a, b) => modifiedArray.indexOf(a.id) - modifiedArray.indexOf(b.id)
+  const defaultAnnouncements = {
+    onDragStart(id) {
+      console.log(`Picked up draggable item ${id}.`);
+    },
+    onDragOver(id, overId) {
+      if (overId) {
+        console.log(
+          `Draggable item ${id} was moved over droppable area ${overId}.`
         );
-        return sorted;
-      });
+        return;
+      }
+
+      console.log(`Draggable item ${id} is no longer over a droppable area.`);
+    },
+    onDragEnd(id, overId) {
+      if (overId) {
+        console.log(
+          `Draggable item ${id} was dropped over droppable area ${overId}`
+        );
+        return;
+      }
+
+      console.log(`Draggable item ${id} was dropped.`);
+    },
+    onDragCancel(id) {
+      console.log(`Dragging was cancelled. Draggable item ${id} was dropped.`);
+    },
+  };
+
+  function findContainer(id) {
+    if (id in data) {
+      return id;
     }
+
+    return Object.keys(data).find((key) =>
+      data[key].find((team: teamProps) => team.id === id)
+    );
+  }
+
+  function handleDragStart(event: any) {
+    const { active } = event;
+    const { id } = active;
+    setIsDragging(true);
+
+    setActiveId(id);
+  }
+
+  function handleDragEnd(event) {
+    const { active, over } = event;
+    const { id } = active;
+    const { id: overId } = over;
+
+    const activeContainer = findContainer(id);
+    const overContainer = findContainer(overId);
+
+    if (
+      !activeContainer ||
+      !overContainer ||
+      activeContainer !== overContainer
+    ) {
+      return;
+    }
+
+    const activeIndex = data[activeContainer]
+      .map(function (e) {
+        return e.id;
+      })
+      .indexOf(active.id);
+    const overIndex = data[overContainer]
+      .map(function (e) {
+        return e.id;
+      })
+      .indexOf(overId);
+
+    console.log(activeIndex);
+    console.log(overIndex);
+
+    if (activeIndex !== overIndex) {
+      setData((items) => ({
+        ...items,
+        [overContainer]: arrayMove(
+          items[overContainer],
+          activeIndex,
+          overIndex
+        ),
+      }));
+    }
+
+    setActiveId(null);
+  }
+
+  function handleDragOver(event) {
+    const { active, over, draggingRect } = event;
+    const { id } = active;
+    const { id: overId } = over;
+
+    // Find the containers
+    const activeContainer = findContainer(id);
+    const overContainer = findContainer(overId);
+    console.log("id: ", activeContainer);
+    console.log("over: ", overContainer);
+
+    if (
+      !activeContainer ||
+      !overContainer ||
+      activeContainer === overContainer
+    ) {
+      return;
+    }
+
+    setData((prev) => {
+      const activeItems = prev[activeContainer];
+      const overItems = prev[overContainer];
+
+      // Find the indexes for the items
+      const activeIndex = activeItems.indexOf(id);
+      const overIndex = overItems.indexOf(overId);
+
+      let newIndex;
+      if (overId in prev) {
+        // We're at the root droppable of a container
+        newIndex = overItems.length + 1;
+      } else {
+        const isBelowLastItem =
+          over &&
+          overIndex === overItems.length - 1 &&
+          draggingRect.offsetTop > over.rect.offsetTop + over.rect.height;
+
+        const modifier = isBelowLastItem ? 1 : 0;
+
+        newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
+      }
+
+      return {
+        ...prev,
+        [activeContainer]: [
+          ...prev[activeContainer].filter((item) => item !== active.id),
+        ],
+        [overContainer]: [
+          ...prev[overContainer].slice(0, newIndex),
+          data[activeContainer][activeIndex],
+          ...prev[overContainer].slice(newIndex, prev[overContainer].length),
+        ],
+      };
+    });
   }
 
   return (
     <>
       <div className="relative w-full">
         <DndContext
+          announcements={defaultAnnouncements}
           sensors={sensors}
           collisionDetection={closestCenter}
-          onDragStart={() => setIsDragging(true)}
-          onDragEnd={handleEnd}
+          onDragStart={handleDragStart}
+          onDragOver={handleDragOver}
+          onDragEnd={handleDragEnd}
         >
           <div className="columns-2 gap-0">
             <div className="pointer-events-none absolute w-[75vw] columns-2 gap-0 lg:w-[64rem] ">
@@ -118,13 +221,16 @@ const RankingsContainer = () => {
                 <div className="bg-[#CBAE39]"></div>
               </div>
               <div className="">
-                <RankingsList array={teamArray} dataObj={data} />
+                <RankingsList id="main" array={mainArray} dataObj={data.main} />
               </div>
             </div>
           </div>
-          <OverflowList key={"overflow"} id={"overflow"} dragging={isDragging}>
-            {/* {parent === id ? item : null} */}
-          </OverflowList>
+          <OverflowList
+            id={"overflow"}
+            array={overflowArray}
+            dataObj={data.overflow}
+            dragging={isDragging}
+          ></OverflowList>
         </DndContext>
       </div>
     </>

@@ -12,6 +12,8 @@ const Card = (props: any) => {
 
   const baseStyles: React.CSSProperties = {
     position: "relative",
+    boxShadow:
+      "0 0 0 1px rgba(63, 63, 68, 0.05), 0px 15px 15px 0 rgba(0, 0, 0, 0.25)",
   };
 
   const initialStyles = {

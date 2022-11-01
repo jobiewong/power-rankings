@@ -1,3 +1,4 @@
+import { useDroppable } from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -7,15 +8,24 @@ import { teamProps } from "../data/team-type";
 import Card from "./Card";
 
 const RankingsList = (props: any) => {
+  const { id, array, dataObj } = props;
+
+  const { setNodeRef } = useDroppable({
+    id,
+  });
+
   return (
     <div>
       <SortableContext
-        items={props.array}
+        id={id}
+        items={array}
         strategy={verticalListSortingStrategy}
       >
-        {props.dataObj.map((team: teamProps) => (
-          <Card key={team.id} id={team.id} team={team} />
-        ))}
+        <div ref={setNodeRef}>
+          {dataObj.map((team: teamProps) => (
+            <Card key={team.id} id={team.id} team={team} />
+          ))}
+        </div>
       </SortableContext>
     </div>
   );

@@ -20,36 +20,36 @@ import { DataContext } from "../data/Context";
 import { teamProps } from "../data/team-type";
 import Card from "./Card";
 
-interface Props {
-  children: React.ReactNode;
-  dragging: boolean;
-  id: string;
-}
+const OverflowList = (props: any) => {
+  const { id, array, dataObj } = props;
 
-const OverflowList = ({ children, id, dragging }: Props) => {
-  const { isOver, setNodeRef } = useDroppable({
+  const { setNodeRef } = useDroppable({
     id,
   });
 
   return (
     <div>
       <div className="relative mt-8 flex w-full flex-col items-center justify-center">
-        <div
-          className={clsx(
-            "duration-125 flex h-16 w-full flex-col items-center justify-center rounded-md border-2 border-dashed border-white/30 capitalize transition-all ease-in",
-            {
-              "bg-white/10": dragging,
-              "": !dragging,
-            }
-          )}
-          ref={setNodeRef}
-          aria-label="Droppable region"
+        <SortableContext
+          id={id}
+          items={array}
+          strategy={verticalListSortingStrategy}
         >
-          {children}
-        </div>
-        <div className="duration-125 mt-4 cursor-pointer text-white opacity-30 transition-all ease-in-out hover:opacity-100">
-          <PlusIcon />
-        </div>
+          <div
+            ref={setNodeRef}
+            className={clsx(
+              "duration-125 flex h-16 w-full flex-col items-center justify-center rounded-md border-2 border-dashed border-white/30 capitalize transition-all ease-in"
+            )}
+            aria-label="Droppable region"
+          >
+            {props.dataObj.map((team: teamProps) => (
+              <Card key={team.id} id={team.id} team={team} />
+            ))}
+          </div>
+          <div className="duration-125 mt-4 cursor-pointer text-white opacity-30 transition-all ease-in-out hover:opacity-100">
+            <PlusIcon />
+          </div>
+        </SortableContext>
       </div>
     </div>
   );
