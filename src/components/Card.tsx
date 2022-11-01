@@ -65,7 +65,7 @@ const Card = (props: any) => {
             backgroundColor: props.team.bgCol,
           }}
         >
-          <div className="flex h-full w-16 flex-col items-center justify-center rounded-l-sm bg-zinc-400">
+          <div className="flex h-full w-16 flex-col items-center justify-center rounded-l-sm bg-white">
             logo
           </div>
           <div className="flex items-center px-4 text-2xl font-black uppercase">

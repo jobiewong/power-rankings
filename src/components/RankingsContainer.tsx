@@ -1,22 +1,49 @@
 import {
+  CancelDrop,
   closestCenter,
+  CollisionDetection,
+  defaultDropAnimationSideEffects,
   DndContext,
+  DragOverlay,
+  DropAnimation,
+  getFirstCollision,
+  KeyboardCoordinateGetter,
   KeyboardSensor,
+  MeasuringStrategy,
+  Modifiers,
+  MouseSensor,
   PointerSensor,
+  pointerWithin,
+  rectIntersection,
+  TouchSensor,
+  UniqueIdentifier,
+  useDroppable,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
 import {
+  AnimateLayoutChanges,
   arrayMove,
+  defaultAnimateLayoutChanges,
+  horizontalListSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
+  SortingStrategy,
+  useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
-import React, { useContext, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { DataContext } from "../data/Context";
 import initialTeams from "../data/initial-data";
 import { teamProps } from "../data/team-type";
+import { coordinateGetter as multipleContainersCoordinateGetter } from "../utils/multipleContainersKeyboardCoordinates";
 import OverflowList from "./OverflowList";
 import RankingsList from "./RankingsList";
 
@@ -36,12 +63,12 @@ const RankingsContainer = () => {
   // @ts-ignore
   const [data, setData] = useContext(DataContext);
 
+  // create array of ID's in data
   const teamArray = Object.keys(data).map((key) => {
     return data[key].id;
   });
 
   const [isDragging, setIsDragging] = useState(false);
-
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -85,15 +112,14 @@ const RankingsContainer = () => {
               ))}
             </div>
             <div className="w-full">
+              <div className="initialiseTailwindColours hidden">
+                <div className="bg-[#CBAE39]"></div>
+                <div className="bg-[#D8D8D8]"></div>
+                <div className="bg-[#CBAE39]"></div>
+              </div>
               <div className="">
                 <RankingsList array={teamArray} dataObj={data} />
               </div>
-            </div>
-
-            <div className="initialiseTailwindColours hidden">
-              <div className="bg-[#CBAE39]"></div>
-              <div className="bg-[#D8D8D8]"></div>
-              <div className="bg-[#CBAE39]"></div>
             </div>
           </div>
           <OverflowList key={"overflow"} id={"overflow"} dragging={isDragging}>
