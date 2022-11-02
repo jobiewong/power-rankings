@@ -14,7 +14,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../data/Context";
 import initialTeams from "../data/initial-data";
 import { teamProps } from "../data/team-type";
-import Card from "./Card";
 import OverflowList from "./OverflowList";
 import RankingsList from "./RankingsList";
 
@@ -58,35 +57,6 @@ const RankingsContainer = () => {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-
-  const defaultAnnouncements = {
-    onDragStart(id) {
-      console.log(`Picked up draggable item ${id}.`);
-    },
-    onDragOver(id, overId) {
-      if (overId) {
-        console.log(
-          `Draggable item ${id} was moved over droppable area ${overId}.`
-        );
-        return;
-      }
-
-      console.log(`Draggable item ${id} is no longer over a droppable area.`);
-    },
-    onDragEnd(id, overId) {
-      if (overId) {
-        console.log(
-          `Draggable item ${id} was dropped over droppable area ${overId}`
-        );
-        return;
-      }
-
-      console.log(`Draggable item ${id} was dropped.`);
-    },
-    onDragCancel(id) {
-      console.log(`Dragging was cancelled. Draggable item ${id} was dropped.`);
-    },
-  };
 
   function findContainer(id) {
     if (id in data) {
@@ -152,11 +122,11 @@ const RankingsContainer = () => {
     const { id } = active;
     const { id: overId } = over;
 
+    console.log(event);
+
     // Find the containers
     const activeContainer = findContainer(id);
     const overContainer = findContainer(overId);
-    // console.log("id: ", activeContainer);
-    // console.log("over: ", overContainer);
 
     if (
       !activeContainer ||
@@ -167,30 +137,37 @@ const RankingsContainer = () => {
     }
 
     setData((prev) => {
-      console.log("prev", prev);
       const activeItems = prev[activeContainer];
       const overItems = prev[overContainer];
 
       // Find the indexes for the items
-      const activeIndex = activeItems.indexOf(id);
-      const overIndex = overItems.indexOf(overId);
+      const activeIndex = data[activeContainer]
+        .map(function (e: teamProps) {
+          return e.id;
+        })
+        .indexOf(active.id);
+      const overIndex = data[overContainer]
+        .map(function (e: teamProps) {
+          return e.id;
+        })
+        .indexOf(overId);
 
       let newIndex;
       if (overId in prev) {
         // We're at the root droppable of a container
         newIndex = overItems.length + 1;
       } else {
-        const isBelowLastItem =
-          over &&
-          overIndex === overItems.length - 1 &&
-          draggingRect.offsetTop > over.rect.offsetTop + over.rect.height;
+        const isBelowLastItem = over && overIndex === overItems.length - 1;
 
         const modifier = isBelowLastItem ? 1 : 0;
 
         newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
       }
 
-      console.log("data: ", {
+      console.log({
+        [activeContainer]: [
+          ...prev[activeContainer].filter((item) => item.id !== active.id),
+        ],
         [overContainer]: [
           ...prev[overContainer].slice(0, newIndex),
           data[activeContainer][activeIndex],
@@ -198,14 +175,7 @@ const RankingsContainer = () => {
         ],
       });
 
-      console.log("item: ", {
-        ...prev[activeContainer].filter((item) => console.log(item.id)),
-      });
-
-      console.log("activeid: ", active.id);
-
       return {
-        ...prev,
         [activeContainer]: [
           ...prev[activeContainer].filter((item) => item.id !== active.id),
         ],
@@ -222,9 +192,8 @@ const RankingsContainer = () => {
     <>
       <div className="relative w-full">
         <DndContext
-          announcements={defaultAnnouncements}
           sensors={sensors}
-          collisionDetection={closestCenter}
+          collisionDetection={closestCorners}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}

@@ -23,8 +23,6 @@ import Card from "./Card";
 const OverflowList = (props: any) => {
   const { id, array, dataObj } = props;
 
-  console.log(props);
-
   const { setNodeRef } = useDroppable({
     id,
   });
