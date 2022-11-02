@@ -11,9 +11,9 @@ export function DataList(props: any) {
     return obj;
   }, {});
 
-  const overflowItems = initialTeams.overflow.reduce(function (obj2, key2) {
-    if (teamData.teams.hasOwnProperty(key2)) obj2[key2] = teamData.teams[key2];
-    return obj2;
+  const overflowItems = initialTeams.overflow.reduce(function (obj, key) {
+    if (teamData.teams.hasOwnProperty(key)) obj[key] = teamData.teams[key];
+    return obj;
   }, {});
 
   // deconstruct objects

@@ -32,7 +32,7 @@ const RankingsContainer = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const [data, setData] = useContext(DataContext);
-  const [activeId, setActiveId] = useState();
+  const [activeId, setActiveId] = useState<string | null>();
 
   const [mainArray, setMainArray] = useState([""]);
   const [overflowArray, setOverflowArray] = useState([""]);
@@ -58,7 +58,7 @@ const RankingsContainer = () => {
     })
   );
 
-  function findContainer(id) {
+  function findContainer(id: string) {
     if (id in data) {
       return id;
     }
@@ -76,7 +76,7 @@ const RankingsContainer = () => {
     setActiveId(id);
   }
 
-  function handleDragEnd(event) {
+  function handleDragEnd(event: any) {
     const { active, over } = event;
     const { id } = active;
     const { id: overId } = over;
@@ -93,18 +93,18 @@ const RankingsContainer = () => {
     }
 
     const activeIndex = data[activeContainer]
-      .map(function (e) {
+      .map(function (e: teamProps) {
         return e.id;
       })
       .indexOf(active.id);
     const overIndex = data[overContainer]
-      .map(function (e) {
+      .map(function (e: teamProps) {
         return e.id;
       })
       .indexOf(overId);
 
     if (activeIndex !== overIndex) {
-      setData((items) => ({
+      setData((items: any) => ({
         ...items,
         [overContainer]: arrayMove(
           items[overContainer],
@@ -117,7 +117,7 @@ const RankingsContainer = () => {
     setActiveId(null);
   }
 
-  function handleDragOver(event) {
+  function handleDragOver(event: any) {
     const { active, over, draggingRect } = event;
     const { id } = active;
     const { id: overId } = over;
@@ -136,7 +136,7 @@ const RankingsContainer = () => {
       return;
     }
 
-    setData((prev) => {
+    setData((prev: any) => {
       const activeItems = prev[activeContainer];
       const overItems = prev[overContainer];
 
@@ -166,7 +166,9 @@ const RankingsContainer = () => {
 
       console.log({
         [activeContainer]: [
-          ...prev[activeContainer].filter((item) => item.id !== active.id),
+          ...prev[activeContainer].filter(
+            (item: teamProps) => item.id !== active.id
+          ),
         ],
         [overContainer]: [
           ...prev[overContainer].slice(0, newIndex),
@@ -177,7 +179,9 @@ const RankingsContainer = () => {
 
       return {
         [activeContainer]: [
-          ...prev[activeContainer].filter((item) => item.id !== active.id),
+          ...prev[activeContainer].filter(
+            (item: teamProps) => item.id !== active.id
+          ),
         ],
         [overContainer]: [
           ...prev[overContainer].slice(0, newIndex),
