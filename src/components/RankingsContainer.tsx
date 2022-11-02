@@ -10,10 +10,11 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../data/Context";
 import initialTeams from "../data/initial-data";
 import { teamProps } from "../data/team-type";
+import Card from "./Card";
 import OverflowList from "./OverflowList";
 import RankingsList from "./RankingsList";
 
@@ -34,13 +35,21 @@ const RankingsContainer = () => {
   const [data, setData] = useContext(DataContext);
   const [activeId, setActiveId] = useState();
 
-  // create array of ID's in data
-  const mainArray = Object.keys(data.main).map((key) => {
-    return data.main[key].id;
-  });
-  const overflowArray = Object.keys(data.overflow).map((key) => {
-    return data.overflow[key].id;
-  });
+  const [mainArray, setMainArray] = useState([""]);
+  const [overflowArray, setOverflowArray] = useState([""]);
+
+  useEffect(() => {
+    // create array of ID's in data
+    const main = Object.keys(data.main).map((key) => {
+      return data.main[key].id;
+    });
+    const overflow = Object.keys(data.overflow).map((key) => {
+      return data.overflow[key].id;
+    });
+
+    setMainArray(main);
+    setOverflowArray(overflow);
+  }, [data]);
 
   const [isDragging, setIsDragging] = useState(false);
   const sensors = useSensors(
@@ -124,9 +133,6 @@ const RankingsContainer = () => {
       })
       .indexOf(overId);
 
-    console.log(activeIndex);
-    console.log(overIndex);
-
     if (activeIndex !== overIndex) {
       setData((items) => ({
         ...items,
@@ -149,8 +155,8 @@ const RankingsContainer = () => {
     // Find the containers
     const activeContainer = findContainer(id);
     const overContainer = findContainer(overId);
-    console.log("id: ", activeContainer);
-    console.log("over: ", overContainer);
+    // console.log("id: ", activeContainer);
+    // console.log("over: ", overContainer);
 
     if (
       !activeContainer ||
@@ -161,6 +167,7 @@ const RankingsContainer = () => {
     }
 
     setData((prev) => {
+      console.log("prev", prev);
       const activeItems = prev[activeContainer];
       const overItems = prev[overContainer];
 
@@ -183,10 +190,24 @@ const RankingsContainer = () => {
         newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
       }
 
+      console.log("data: ", {
+        [overContainer]: [
+          ...prev[overContainer].slice(0, newIndex),
+          data[activeContainer][activeIndex],
+          ...prev[overContainer].slice(newIndex, prev[overContainer].length),
+        ],
+      });
+
+      console.log("item: ", {
+        ...prev[activeContainer].filter((item) => console.log(item.id)),
+      });
+
+      console.log("activeid: ", active.id);
+
       return {
         ...prev,
         [activeContainer]: [
-          ...prev[activeContainer].filter((item) => item !== active.id),
+          ...prev[activeContainer].filter((item) => item.id !== active.id),
         ],
         [overContainer]: [
           ...prev[overContainer].slice(0, newIndex),
@@ -218,7 +239,7 @@ const RankingsContainer = () => {
               <div className="initialiseTailwindColours hidden">
                 <div className="bg-[#CBAE39]"></div>
                 <div className="bg-[#D8D8D8]"></div>
-                <div className="bg-[#CBAE39]"></div>
+                <div className="bg-[#AC8A61]"></div>
               </div>
               <div className="">
                 <RankingsList id="main" array={mainArray} dataObj={data.main} />
@@ -231,6 +252,9 @@ const RankingsContainer = () => {
             dataObj={data.overflow}
             dragging={isDragging}
           ></OverflowList>
+          <DragOverlay>
+            {activeId ? <CardOverlay id={activeId} /> : null}
+          </DragOverlay>
         </DndContext>
       </div>
     </>
@@ -261,7 +285,7 @@ const Numbers = ({ number, index }: numbersProps) => {
       {number}
       {index === 0 && <Underline colour="#CBAE39" iter={index} />}
       {index === 1 && <Underline colour="#D8D8D8" iter={index} />}
-      {index === 2 && <Underline colour="#CBAE39" iter={index} />}
+      {index === 2 && <Underline colour="#AC8A61" iter={index} />}
     </div>
   );
 };
@@ -284,4 +308,8 @@ const Underline = (props: { colour: string; iter: number }) => {
       <div className={`h-[.2rem] w-5 bg-[${colour}]`} />
     </motion.div>
   );
+};
+
+const CardOverlay = (props: any) => {
+  return <div>{props.id}</div>;
 };

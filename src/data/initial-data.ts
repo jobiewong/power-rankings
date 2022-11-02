@@ -1,6 +1,6 @@
 const initialTeams = {
     teams: ['faze', 'sen', 'cloudnine', 'nrg', 'eg', 'loud', 'mibr', 'thieves', 'furia', 'leviatan'],
-    overflow: []
+    overflow: ['hgvs']
 };
 
 export default initialTeams;

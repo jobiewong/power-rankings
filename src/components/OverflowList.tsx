@@ -23,6 +23,8 @@ import Card from "./Card";
 const OverflowList = (props: any) => {
   const { id, array, dataObj } = props;
 
+  console.log(props);
+
   const { setNodeRef } = useDroppable({
     id,
   });
@@ -42,7 +44,7 @@ const OverflowList = (props: any) => {
             )}
             aria-label="Droppable region"
           >
-            {props.dataObj.map((team: teamProps) => (
+            {dataObj.map((team: teamProps) => (
               <Card key={team.id} id={team.id} team={team} />
             ))}
           </div>

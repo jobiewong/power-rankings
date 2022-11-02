@@ -20,13 +20,13 @@ export function DataList(props: any) {
   const itemsArray = Object.keys(items).map((key) => {
     return items[key];
   });
-  const overflowArray = Object.keys(items).map((key) => {
+  const overflowArray = Object.keys(overflowItems).map((key) => {
     return overflowItems[key];
   });
 
   const totalItems = {
     main: itemsArray,
-    overflow: [],
+    overflow: overflowArray,
   };
   // console.log(initialTeams.overflow);
 
