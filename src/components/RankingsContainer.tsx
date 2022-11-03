@@ -187,8 +187,8 @@ const RankingsContainer = () => {
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
-          <div className="grid h-96 grid-flow-col grid-cols-2 grid-rows-5">
-            <div className="pointer-events-none absolute h-96 w-[75vw] grid-flow-col grid-cols-2 grid-rows-5 lg:w-[64rem]">
+          <div className="absolute">
+            <div className="pointer-events-none grid h-96 w-[75vw] grid-flow-col grid-cols-2 grid-rows-5 lg:w-[64rem]">
               {numbers.map((number, index) => (
                 <Numbers key={number} number={number} index={index} />
               ))}
@@ -199,11 +199,10 @@ const RankingsContainer = () => {
                 <div className="bg-[#D8D8D8]"></div>
                 <div className="bg-[#AC8A61]"></div>
               </div>
-              <div className="">
-                <RankingsList id="main" array={mainArray} dataObj={data.main} />
-              </div>
+              <div className=""></div>
             </div>
           </div>
+          <RankingsList id="main" array={mainArray} dataObj={data.main} />
           <OverflowList
             id={"overflow"}
             array={overflowArray}
@@ -239,11 +238,13 @@ const variants = {
 
 const Numbers = ({ number, index }: numbersProps) => {
   return (
-    <div className="relative mb-4 flex h-16 w-14 flex-col items-center justify-center text-2xl font-black text-white">
-      {number}
-      {index === 0 && <Underline colour="#CBAE39" iter={index} />}
-      {index === 1 && <Underline colour="#D8D8D8" iter={index} />}
-      {index === 2 && <Underline colour="#AC8A61" iter={index} />}
+    <div className="w-full">
+      <div className="mb-4 flex h-16 w-14 flex-col items-center justify-center text-2xl font-black text-white">
+        {number}
+        {index === 0 && <Underline colour="#CBAE39" iter={index} />}
+        {index === 1 && <Underline colour="#D8D8D8" iter={index} />}
+        {index === 2 && <Underline colour="#AC8A61" iter={index} />}
+      </div>
     </div>
   );
 };
