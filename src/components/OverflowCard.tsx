@@ -25,10 +25,10 @@ const OverflowCard = (props: props) => {
     scale: 1,
   };
 
-  const stylesItem = "flex h-16 w-full flex-row";
+  const stylesItem = "flex h-16 w-16 flex-row";
 
   return (
-    <div className="mx-2 flex flex-row">
+    <div className="mr-2 flex flex-row">
       <motion.div
         className={stylesItem}
         style={baseStyles}

@@ -191,7 +191,7 @@ const RankingsContainer = () => {
           onDragEnd={handleDragEnd}
         >
           <div className="absolute">
-            <div className="pointer-events-none grid h-96 w-[75vw] grid-flow-col grid-cols-2 grid-rows-5 lg:w-[64rem]">
+            <div className="grid h-96 w-[75vw] grid-flow-col grid-cols-2 grid-rows-5 lg:w-[64rem]">
               {numbers.map((number, index) => (
                 <Numbers key={number} number={number} index={index} />
               ))}
