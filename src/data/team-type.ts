@@ -3,6 +3,7 @@ type teamProps = {
     name: string;
     bgCol: string;
     textCol: string;
+    logo: string;
   };
 
 export type { teamProps };

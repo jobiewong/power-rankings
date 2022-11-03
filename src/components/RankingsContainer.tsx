@@ -122,8 +122,6 @@ const RankingsContainer = () => {
     const { id } = active;
     const { id: overId } = over;
 
-    console.log(event);
-
     // Find the containers
     const activeContainer = findContainer(id);
     const overContainer = findContainer(overId);
@@ -164,19 +162,6 @@ const RankingsContainer = () => {
         newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
       }
 
-      console.log({
-        [activeContainer]: [
-          ...prev[activeContainer].filter(
-            (item: teamProps) => item.id !== active.id
-          ),
-        ],
-        [overContainer]: [
-          ...prev[overContainer].slice(0, newIndex),
-          data[activeContainer][activeIndex],
-          ...prev[overContainer].slice(newIndex, prev[overContainer].length),
-        ],
-      });
-
       return {
         [activeContainer]: [
           ...prev[activeContainer].filter(
@@ -197,13 +182,13 @@ const RankingsContainer = () => {
       <div className="relative w-full">
         <DndContext
           sensors={sensors}
-          collisionDetection={closestCorners}
+          collisionDetection={closestCenter}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
-          <div className="columns-2 gap-0">
-            <div className="pointer-events-none absolute w-[75vw] columns-2 gap-0 lg:w-[64rem] ">
+          <div className="grid h-96 grid-flow-col grid-cols-2 grid-rows-5">
+            <div className="pointer-events-none absolute h-96 w-[75vw] grid-flow-col grid-cols-2 grid-rows-5 lg:w-[64rem]">
               {numbers.map((number, index) => (
                 <Numbers key={number} number={number} index={index} />
               ))}
@@ -225,9 +210,9 @@ const RankingsContainer = () => {
             dataObj={data.overflow}
             dragging={isDragging}
           ></OverflowList>
-          <DragOverlay>
+          {/* <DragOverlay>
             {activeId ? <CardOverlay id={activeId} /> : null}
-          </DragOverlay>
+          </DragOverlay> */}
         </DndContext>
       </div>
     </>

@@ -10,6 +10,8 @@ import {
 } from "@dnd-kit/core";
 import {
   arrayMove,
+  horizontalListSortingStrategy,
+  rectSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
@@ -18,7 +20,7 @@ import clsx from "clsx";
 import React, { useContext } from "react";
 import { DataContext } from "../data/Context";
 import { teamProps } from "../data/team-type";
-import Card from "./Card";
+import OverflowCard from "./OverflowCard";
 
 const OverflowList = (props: any) => {
   const { id, array, dataObj } = props;
@@ -30,20 +32,16 @@ const OverflowList = (props: any) => {
   return (
     <div>
       <div className="relative mt-8 flex w-full flex-col items-center justify-center">
-        <SortableContext
-          id={id}
-          items={array}
-          strategy={verticalListSortingStrategy}
-        >
+        <SortableContext id={id} items={array} strategy={rectSortingStrategy}>
           <div
             ref={setNodeRef}
             className={clsx(
-              "duration-125 flex h-16 w-full flex-col items-center justify-center rounded-md border-2 border-dashed border-white/30 capitalize transition-all ease-in"
+              "duration-125 flex min-h-[4rem] w-full flex-row items-center justify-center rounded-md border-2 border-dashed border-white/30 py-2 capitalize transition-all ease-in"
             )}
             aria-label="Droppable region"
           >
             {dataObj.map((team: teamProps) => (
-              <Card key={team.id} id={team.id} team={team} />
+              <OverflowCard key={team.id} id={team.id} team={team} />
             ))}
           </div>
           <div className="duration-125 mt-4 cursor-pointer text-white opacity-30 transition-all ease-in-out hover:opacity-100">

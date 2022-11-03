@@ -15,13 +15,16 @@ const RankingsList = (props: any) => {
   });
 
   return (
-    <div>
+    <div className="">
       <SortableContext
         id={id}
         items={array}
         strategy={verticalListSortingStrategy}
       >
-        <div ref={setNodeRef}>
+        <div
+          ref={setNodeRef}
+          className="grid h-96 grid-flow-col grid-cols-2 grid-rows-5"
+        >
           {dataObj.map((team: teamProps) => (
             <Card key={team.id} id={team.id} team={team} />
           ))}

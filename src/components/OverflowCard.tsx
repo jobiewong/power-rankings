@@ -9,7 +9,7 @@ interface props {
   team: teamProps;
 }
 
-const Card = (props: props) => {
+const OverflowCard = (props: props) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -25,12 +25,10 @@ const Card = (props: props) => {
     scale: 1,
   };
 
-  const stylesItem = "mb-4 flex h-16 w-full flex-row";
+  const stylesItem = "flex h-16 w-full flex-row";
 
   return (
-    <div className="flex flex-row">
-      <div className="pointer-events-none h-0 w-16 bg-transparent"></div>
-
+    <div className="mx-2 flex flex-row">
       <motion.div
         className={stylesItem}
         style={baseStyles}
@@ -70,7 +68,7 @@ const Card = (props: props) => {
             backgroundColor: props.team.bgCol,
           }}
         >
-          <div className="flex h-full w-16 flex-col items-center justify-center rounded-l-sm bg-white">
+          <div className="flex h-full w-16 flex-col items-center justify-center rounded-sm bg-white">
             <Image
               alt={props.team.name}
               src={`/images/${props.team.logo}.png`}
@@ -78,13 +76,10 @@ const Card = (props: props) => {
               height={64}
             />
           </div>
-          <div className="flex items-center px-4 text-2xl font-black uppercase">
-            {props.team.name}
-          </div>
         </div>
       </motion.div>
     </div>
   );
 };
 
-export default Card;
+export default OverflowCard;
