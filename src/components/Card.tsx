@@ -28,13 +28,11 @@ const Card = (props: props) => {
   const stylesItem = "mb-4 flex h-16 w-full flex-row";
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row" ref={setNodeRef}>
       <div className="pointer-events-none h-0 w-16 bg-transparent"></div>
-
       <motion.div
         className={stylesItem}
         style={baseStyles}
-        ref={setNodeRef}
         layoutId={props.id}
         animate={
           transform

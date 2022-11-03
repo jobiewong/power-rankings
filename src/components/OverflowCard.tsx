@@ -28,11 +28,10 @@ const OverflowCard = (props: props) => {
   const stylesItem = "flex h-16 w-16 flex-row";
 
   return (
-    <div className="mr-2 flex flex-row">
+    <div className="mr-2 flex flex-row" ref={setNodeRef}>
       <motion.div
         className={stylesItem}
         style={baseStyles}
-        ref={setNodeRef}
         layoutId={props.id}
         animate={
           transform

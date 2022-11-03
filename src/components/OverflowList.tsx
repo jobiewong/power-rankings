@@ -25,9 +25,9 @@ import OverflowCard from "./OverflowCard";
 const OverflowList = (props: any) => {
   const { id, array, dataObj } = props;
 
-  const { setNodeRef } = useDroppable({
-    id,
-  });
+  // const { setNodeRef } = useDroppable({
+  //   id,
+  // });
 
   return (
     <div>
@@ -38,7 +38,7 @@ const OverflowList = (props: any) => {
           strategy={horizontalListSortingStrategy}
         >
           <div
-            ref={setNodeRef}
+            // ref={setNodeRef}
             className={clsx(
               "duration-125 flex min-h-[4rem] w-full flex-row items-center rounded-md border-2 border-dashed border-white/30 p-2 capitalize transition-all ease-in"
             )}
