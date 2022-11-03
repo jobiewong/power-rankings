@@ -72,8 +72,8 @@ const OverflowCard = (props: props) => {
             <Image
               alt={props.team.name}
               src={`/images/${props.team.logo}.png`}
-              width={64}
-              height={64}
+              width={48}
+              height={48}
             />
           </div>
         </div>

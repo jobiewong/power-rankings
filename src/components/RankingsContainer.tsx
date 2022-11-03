@@ -46,6 +46,9 @@ const RankingsContainer = () => {
       return data.overflow[key].id;
     });
 
+    console.log("main: ", data.main);
+    console.log("overflow: ", data.overflow);
+
     setMainArray(main);
     setOverflowArray(overflow);
   }, [data]);

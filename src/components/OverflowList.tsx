@@ -32,13 +32,17 @@ const OverflowList = (props: any) => {
   return (
     <div>
       <div className="relative mt-8 flex w-full flex-col items-center justify-center">
-        <SortableContext id={id} items={array} strategy={rectSortingStrategy}>
+        <SortableContext
+          id={id}
+          items={array}
+          strategy={horizontalListSortingStrategy}
+        >
           <div
             ref={setNodeRef}
             className={clsx(
               "duration-125 flex min-h-[4rem] w-full flex-row items-center justify-center rounded-md border-2 border-dashed border-white/30 py-2 capitalize transition-all ease-in"
             )}
-            aria-label="Droppable region"
+            aria-label="Overflow region"
           >
             {dataObj.map((team: teamProps) => (
               <OverflowCard key={team.id} id={team.id} team={team} />
