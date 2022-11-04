@@ -24,7 +24,7 @@ data = {"team_names": [],
 table_container = soup.find(class_="eg-standing-container")
 table_rows = table_container.find_all(class_="wf-table")
 
-# remmove divs with class 'ge-text-light'
+# remove divs with class 'ge-text-light'
 for div in soup.find_all("div", {'class': 'ge-text-light'}):
     div.decompose()
 
