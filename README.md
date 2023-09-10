@@ -1,37 +1,28 @@
-# ⚡️ Power Rankings
+# Create T3 App
 
-A simple Electron-based webapp which aims to emulate the power rankings format of [Platchat](https://www.youtube.com/c/PlatChatVALORANT) - an eSports podcast for Overwatch and Valorant.
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-![electron_pwuLVl9gPx](https://user-images.githubusercontent.com/81576910/167455982-8d2a87db-dade-4b04-87c9-f92df3b609fe.gif)
+## What's next? How do I make an app with this?
 
-## ✍️ To Use
+We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-To use, simply open up the app and a default rankings will be opened.
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-To add a team, click the ✚ icon and fill in all the details. Click "Submit" to add the team to the overflow section.
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
 
-> ⛔️ As of now, if you close the app your changes won't automatically be saved.
+## Learn More
 
-### 💾 Saving Your Rankings
+To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
-To save your rankings, simple click the "Export" button and choose a location to save out to.
+- [Documentation](https://create.t3.gg/)
+- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-### 📂 Loading Your Rankings
+You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
 
-To load an exported ranking, click "Import" and choose your file.
+## How do I deploy this?
 
-## 🛠 Installation
-
-1. Go to [Releases](https://github.com/jobiewong/power-rankings/releases) and select the appropriate version to download
-2. Simply unzip the folder and launch!
-
-## 📝 To Do
-
-Features that need adding:
-
-- Click to add tier break
-- Import logo from url ✔
-- Don't allow more than 10 items to be dragged into the main list
-- Team presets dropdown list
-- Save rankings as default preset
-- Export as image
+Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
