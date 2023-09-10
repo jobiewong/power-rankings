@@ -1,6 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import RankingsGrid from "~/components/RankingsGrid";
 import { Separator } from "~/components/ui/separator";
 
 import { api } from "~/utils/api";
@@ -14,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className=" bg-platchat-background flex min-h-screen flex-col items-center justify-center">
-        <div className="preview container flex flex-col items-center justify-center px-4 py-16">
+        <div className="container flex flex-col items-center justify-center px-4 py-16">
           <div className="flex flex-col items-center gap-1">
             <h3 className="text-platchat-primary text-xl font-light uppercase">
               Platchat Valorant
@@ -23,6 +24,9 @@ export default function Home() {
             <h1 className="text-3xl font-bold uppercase text-white">
               Power Rankings
             </h1>
+          </div>
+          <div className="preview mt-8 w-[40rem]">
+            <RankingsGrid />
           </div>
         </div>
       </main>
