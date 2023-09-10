@@ -1,6 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import { Separator } from "~/components/ui/separator";
 
 import { api } from "~/utils/api";
 
@@ -14,12 +15,15 @@ export default function Home() {
       </Head>
       <main className=" bg-platchat-background flex min-h-screen flex-col items-center justify-center">
         <div className="preview container flex flex-col items-center justify-center px-4 py-16">
-          <h3 className="text-platchat-primary font-light uppercase">
-            Platchat Valorant
-          </h3>
-          <h1 className="text-3xl font-bold uppercase text-white">
-            Power Rankings
-          </h1>
+          <div className="flex flex-col items-center gap-1">
+            <h3 className="text-platchat-primary text-xl font-light uppercase">
+              Platchat Valorant
+            </h3>
+            <Separator className="h-[2px]" />
+            <h1 className="text-3xl font-bold uppercase text-white">
+              Power Rankings
+            </h1>
+          </div>
         </div>
       </main>
     </>
