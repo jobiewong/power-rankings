@@ -17,7 +17,7 @@ import React from "react";
 import { useMeasure } from "react-use";
 import RankingsItem from "~/components/RankingsItem";
 import type { ExampleData } from "~/types/datatypes";
-import { generateData } from "~/utils/utils";
+import { findItem, generateData } from "~/utils/utils";
 
 function RankingsGrid() {
   const [data, setData] = React.useState<ExampleData[]>([]);
@@ -38,9 +38,9 @@ function RankingsGrid() {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (active.id !== over?.id && over !== null) {
-      setData((data) => {
-        const oldIndex = data.findIndex((item) => item.uuid === active.id);
-        const newIndex = data.findIndex((item) => item.uuid === over.id);
+      setDataIds((data) => {
+        const oldIndex = data.findIndex((item) => item === active.id);
+        const newIndex = data.findIndex((item) => item === over.id);
 
         return arrayMove(data, oldIndex, newIndex);
       });
@@ -76,9 +76,13 @@ function RankingsGrid() {
           </div>
           <SortableContext items={dataIds} strategy={rectSortingStrategy}>
             <ul className="grid grid-flow-col grid-cols-2 grid-rows-5 gap-x-8 gap-y-4">
-              {data.map((item, ci) => (
-                <RankingsItem data={item} key={item.uuid} />
-              ))}
+              {dataIds.map((item, ci) => {
+                const itemData = findItem(data, item);
+                if (itemData === undefined) return <div>NULL</div>;
+                else {
+                  return <RankingsItem data={itemData} key={item} />;
+                }
+              })}
             </ul>
           </SortableContext>
         </div>

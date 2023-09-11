@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { ExampleData } from "~/types/datatypes";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -17,4 +18,8 @@ export function generateData(number: number) {
     });
   }
   return data;
+}
+
+export function findItem(items: ExampleData[], uuid: string) {
+  return items.find((item) => item.uuid === uuid);
 }
