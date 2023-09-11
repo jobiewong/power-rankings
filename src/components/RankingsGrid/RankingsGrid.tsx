@@ -66,7 +66,7 @@ function RankingsGrid() {
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
+        onDragMove={handleDragEnd}
       >
         <div className="relative">
           <div className="absolute grid w-full grid-flow-col grid-cols-2 grid-rows-5 gap-x-6 gap-y-4">

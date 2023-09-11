@@ -1,22 +1,43 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { motion } from "framer-motion";
+import { relative } from "path";
 import * as React from "react";
 import type { ExampleData } from "~/types/datatypes";
 
 const RankingsItem = React.forwardRef<HTMLDivElement, { data: ExampleData }>(
   function RankingsItem({ data }, ref) {
-    const { attributes, listeners, setNodeRef, transform, transition } =
-      useSortable({ id: data.uuid });
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+      isDragging,
+    } = useSortable({ id: data.uuid });
+
+    const initialStyles = {
+      x: 0,
+      y: 0,
+      scale: 1,
+    };
+
     const style = {
       transform: CSS.Transform.toString(transform),
       transition,
     };
 
     return (
-      <li
+      <motion.li
         className="z-10 flex w-full text-white"
         ref={setNodeRef}
-        style={style}
+        // style={style}
+        style={{ position: "relative" }}
+        layoutId={data.uuid}
+        transition={{
+          type: "spring",
+          damping: 15,
+        }}
         {...attributes}
         {...listeners}
       >
@@ -30,7 +51,7 @@ const RankingsItem = React.forwardRef<HTMLDivElement, { data: ExampleData }>(
         >
           {data.name}
         </div>
-      </li>
+      </motion.li>
     );
   },
 );
