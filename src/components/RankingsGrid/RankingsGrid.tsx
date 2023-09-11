@@ -10,8 +10,7 @@ function RankingsGrid() {
     width: number;
     height: number;
   }>({ width: 56, height: 56 });
-  const [ref, { x, y, width, height, top, right, bottom, left }] =
-    useMeasure<HTMLLIElement>();
+  const [ref, { width, height }] = useMeasure<HTMLLIElement>();
 
   React.useEffect(() => {
     setData(generateData(10));

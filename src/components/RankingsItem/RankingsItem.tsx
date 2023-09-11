@@ -4,7 +4,7 @@ import type { ExampleData } from "~/types/datatypes";
 const RankingsItem = React.forwardRef<HTMLLIElement, { data: ExampleData }>(
   function RankingsItem({ data }, ref) {
     return (
-      <li ref={ref} className="flex w-full text-white">
+      <li ref={ref} className="z-10 flex w-full text-white">
         <div className="aspect-square h-full" />
         <div className="aspect-square h-full bg-red-500" />
         <div
