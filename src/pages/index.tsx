@@ -25,7 +25,7 @@ export default function Home() {
               Power Rankings
             </h1>
           </div>
-          <div className="preview mt-8 w-[40rem]">
+          <div className="preview mt-8 w-[48rem]">
             <RankingsGrid />
           </div>
         </div>

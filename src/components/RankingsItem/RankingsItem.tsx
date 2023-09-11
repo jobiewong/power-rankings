@@ -1,25 +1,23 @@
 import * as React from "react";
+import type { ExampleData } from "~/types/datatypes";
 
-interface Props {
-  id: string;
-  name: string;
-  textColour: string;
-  backgroundColour: string;
-}
-
-function RankingsItem({ data }: { data: Props }) {
-  return (
-    <div
-      className="flex w-full"
-      style={{
-        color: "white",
-        backgroundColor: data.backgroundColour,
-      }}
-    >
-      <div className="aspect-square h-full bg-red-500" />
-      <div className="p-4">{data.name}</div>
-    </div>
-  );
-}
+const RankingsItem = React.forwardRef<HTMLLIElement, { data: ExampleData }>(
+  function RankingsItem({ data }, ref) {
+    return (
+      <li ref={ref} className="flex w-full text-white">
+        <div className="aspect-square h-full" />
+        <div className="aspect-square h-full bg-red-500" />
+        <div
+          className="w-full p-4"
+          style={{
+            backgroundColor: data.backgroundColour,
+          }}
+        >
+          {data.name}
+        </div>
+      </li>
+    );
+  },
+);
 
 export default RankingsItem;

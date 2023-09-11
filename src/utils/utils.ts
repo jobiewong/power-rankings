@@ -10,7 +10,7 @@ export function generateData(number: number) {
   const data = [];
   for (let i = 0; i < number; i++) {
     data.push({
-      id: faker.string.uuid(),
+      uuid: faker.string.uuid(),
       name: faker.person.fullName(),
       textColour: faker.internet.color(),
       backgroundColour: faker.internet.color(),
