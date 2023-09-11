@@ -3,7 +3,7 @@ import { CSS } from "@dnd-kit/utilities";
 import * as React from "react";
 import type { ExampleData } from "~/types/datatypes";
 
-const RankingsItem = React.forwardRef<HTMLLIElement, { data: ExampleData }>(
+const RankingsItem = React.forwardRef<HTMLDivElement, { data: ExampleData }>(
   function RankingsItem({ data }, ref) {
     const { attributes, listeners, setNodeRef, transform, transition } =
       useSortable({ id: data.uuid });
@@ -20,7 +20,7 @@ const RankingsItem = React.forwardRef<HTMLLIElement, { data: ExampleData }>(
         {...attributes}
         {...listeners}
       >
-        <div className="pointer-events-none aspect-square h-full" />
+        <div ref={ref} className="pointer-events-none aspect-square h-full" />
         <div className="aspect-square h-full bg-red-500" />
         <div
           className="w-full p-4"

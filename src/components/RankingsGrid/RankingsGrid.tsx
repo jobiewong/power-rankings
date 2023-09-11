@@ -26,7 +26,7 @@ function RankingsGrid() {
     width: number;
     height: number;
   }>({ width: 56, height: 56 });
-  const [ref, { width, height }] = useMeasure<HTMLLIElement>();
+  const [ref, { width, height }] = useMeasure<HTMLDivElement>();
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -78,10 +78,8 @@ function RankingsGrid() {
             <ul className="grid grid-flow-col grid-cols-2 grid-rows-5 gap-x-8 gap-y-4">
               {dataIds.map((item, ci) => {
                 const itemData = findItem(data, item);
-                if (itemData === undefined) return <div>NULL</div>;
-                else {
-                  return <RankingsItem data={itemData} key={item} />;
-                }
+                if (itemData === undefined) return;
+                return <RankingsItem data={itemData} key={item} ref={ref} />;
               })}
             </ul>
           </SortableContext>
