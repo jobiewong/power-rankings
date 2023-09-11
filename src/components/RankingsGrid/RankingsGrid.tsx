@@ -1,3 +1,18 @@
+import {
+  DndContext,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  arrayMove,
+  rectSortingStrategy,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import React from "react";
 import { useMeasure } from "react-use";
 import RankingsItem from "~/components/RankingsItem";
@@ -6,15 +21,40 @@ import { generateData } from "~/utils/utils";
 
 function RankingsGrid() {
   const [data, setData] = React.useState<ExampleData[]>([]);
+  const [dataIds, setDataIds] = React.useState<string[]>([]);
   const [gridDimensions, setGridDimensions] = React.useState<{
     width: number;
     height: number;
   }>({ width: 56, height: 56 });
   const [ref, { width, height }] = useMeasure<HTMLLIElement>();
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    }),
+  );
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (active.id !== over?.id && over !== null) {
+      setData((data) => {
+        const oldIndex = data.findIndex((item) => item.uuid === active.id);
+        const newIndex = data.findIndex((item) => item.uuid === over.id);
+
+        return arrayMove(data, oldIndex, newIndex);
+      });
+    }
+  }
 
   React.useEffect(() => {
     setData(generateData(10));
   }, []);
+
+  React.useEffect(() => {
+    console.log(data.map((item) => item.name));
+    setDataIds(data.map((item) => item.uuid));
+  }, [data]);
 
   React.useEffect(() => {
     setGridDimensions({ width, height });
@@ -23,22 +63,26 @@ function RankingsGrid() {
   if (data === undefined) return <div></div>;
   else {
     return (
-      <div className="relative">
-        <div className="absolute grid w-full grid-flow-col grid-cols-2 grid-rows-5 gap-x-6 gap-y-4">
-          {data.map((item, ci) => (
-            <GridNumber key={ci} rank={ci} dimensions={gridDimensions} />
-          ))}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <div className="relative">
+          <div className="absolute grid w-full grid-flow-col grid-cols-2 grid-rows-5 gap-x-6 gap-y-4">
+            {data.map((item, ci) => (
+              <GridNumber key={ci} rank={ci} dimensions={gridDimensions} />
+            ))}
+          </div>
+          <SortableContext items={dataIds} strategy={rectSortingStrategy}>
+            <ul className="grid grid-flow-col grid-cols-2 grid-rows-5 gap-x-8 gap-y-4">
+              {data.map((item, ci) => (
+                <RankingsItem data={item} key={item.uuid} />
+              ))}
+            </ul>
+          </SortableContext>
         </div>
-        <ul className="grid grid-flow-col grid-cols-2 grid-rows-5 gap-x-8 gap-y-4">
-          {data.map((item, ci) => {
-            if (ci === 0)
-              return <RankingsItem key={item.uuid} data={item} ref={ref} />;
-            else {
-              return <RankingsItem key={item.uuid} data={item} />;
-            }
-          })}
-        </ul>
-      </div>
+      </DndContext>
     );
   }
 }
