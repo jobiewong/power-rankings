@@ -1,26 +1,20 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { motion } from "framer-motion";
-import { relative } from "path";
 import * as React from "react";
 import type { ExampleData } from "~/types/datatypes";
 
 const RankingsItem = React.forwardRef<HTMLDivElement, { data: ExampleData }>(
   function RankingsItem({ data }, ref) {
-    const {
-      attributes,
-      listeners,
-      setNodeRef,
-      transform,
-      transition,
-      isDragging,
-    } = useSortable({ id: data.uuid });
+    const { attributes, listeners, setNodeRef, isDragging } = useSortable({
+      id: data.uuid,
+      transition: { duration: 750, easing: "ease" },
+    });
 
     return (
       <motion.li
-        className="relative z-10 flex w-full text-white"
+        className="relative z-10 flex w-full overflow-hidden text-white"
         ref={setNodeRef}
-        style={{ opacity: isDragging ? 0 : 1 }}
+        animate={{ opacity: isDragging ? 0.3 : 1 }}
         layoutId={data.uuid}
         transition={{
           type: "spring",
@@ -45,30 +39,3 @@ const RankingsItem = React.forwardRef<HTMLDivElement, { data: ExampleData }>(
 );
 
 export default RankingsItem;
-
-export function DragOverlayItem({
-  data,
-  height,
-}: {
-  data: ExampleData | undefined;
-  height: number;
-}) {
-  if (data === undefined) return;
-  return (
-    <motion.li
-      className="z-10 flex w-full text-white"
-      style={{ height: height }}
-    >
-      <div className="pointer-events-none aspect-square h-full" />
-      <div className="aspect-square h-full bg-red-500" />
-      <div
-        className="w-full p-4"
-        style={{
-          backgroundColor: data.backgroundColour,
-        }}
-      >
-        {data.name}
-      </div>
-    </motion.li>
-  );
-}

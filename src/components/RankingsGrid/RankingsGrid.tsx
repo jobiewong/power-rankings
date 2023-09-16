@@ -14,10 +14,10 @@ import {
   arrayMove,
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
-import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import React from "react";
 import { useMeasure } from "react-use";
-import RankingsItem, { DragOverlayItem } from "~/components/RankingsItem";
+import RankingsItem from "~/components/RankingsItem";
 import type { ExampleData } from "~/types/datatypes";
 import { findItem, generateData } from "~/utils/utils";
 
@@ -55,8 +55,8 @@ function RankingsGrid() {
     setActiveId(event.active.id as string);
   }
 
-  function handleDragEnd(event: DragEndEvent) {
-    // setActiveId(null);
+  function handleDragEnd() {
+    setActiveId(null);
   }
 
   React.useEffect(() => {
@@ -78,7 +78,7 @@ function RankingsGrid() {
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
-        onDragMove={handleDragMove}
+        onDragOver={handleDragMove}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
@@ -90,15 +90,20 @@ function RankingsGrid() {
           </div>
           <SortableContext items={listData} strategy={rectSortingStrategy}>
             <ul className="grid grid-flow-col grid-cols-2 grid-rows-5 gap-x-8 gap-y-4">
-              {listData.map((item, ci) => {
-                const itemData = findItem(data, item);
+              {listData.map((itemId) => {
+                const itemData = findItem(data, itemId);
                 if (itemData === undefined) return;
-                return <RankingsItem data={itemData} key={item} ref={ref} />;
+                return <RankingsItem data={itemData} key={itemId} ref={ref} />;
               })}
             </ul>
           </SortableContext>
         </div>
-        <DragOverlay dropAnimation={{ duration: 500 }}>
+        <DragOverlay
+          dropAnimation={{
+            ...defaultDropAnimation,
+            duration: 750 / 2,
+          }}
+        >
           {activeId ? (
             <DragOverlayItem data={findItem(data, activeId)} height={height} />
           ) : null}
@@ -129,5 +134,33 @@ function GridNumber({
         {rank}
       </div>
     </div>
+  );
+}
+
+function DragOverlayItem({
+  data,
+  height,
+}: {
+  data: ExampleData | undefined;
+
+  height: number;
+}) {
+  if (data === undefined) return null;
+  return (
+    <motion.li
+      className="z-10 flex w-full text-white"
+      style={{ height: height }}
+    >
+      <div className="pointer-events-none aspect-square h-full" />
+      <div className="aspect-square h-full bg-red-500" />
+      <div
+        className="w-full p-4"
+        style={{
+          backgroundColor: data.backgroundColour,
+        }}
+      >
+        {data.name}
+      </div>
+    </motion.li>
   );
 }
