@@ -16,23 +16,11 @@ const RankingsItem = React.forwardRef<HTMLDivElement, { data: ExampleData }>(
       isDragging,
     } = useSortable({ id: data.uuid });
 
-    const initialStyles = {
-      x: 0,
-      y: 0,
-      scale: 1,
-    };
-
-    const style = {
-      transform: CSS.Transform.toString(transform),
-      transition,
-    };
-
     return (
       <motion.li
-        className="z-10 flex w-full text-white"
+        className="relative z-10 flex w-full text-white"
         ref={setNodeRef}
-        // style={style}
-        style={{ position: "relative" }}
+        style={{ opacity: isDragging ? 0 : 1 }}
         layoutId={data.uuid}
         transition={{
           type: "spring",
@@ -57,3 +45,30 @@ const RankingsItem = React.forwardRef<HTMLDivElement, { data: ExampleData }>(
 );
 
 export default RankingsItem;
+
+export function DragOverlayItem({
+  data,
+  height,
+}: {
+  data: ExampleData | undefined;
+  height: number;
+}) {
+  if (data === undefined) return;
+  return (
+    <motion.li
+      className="z-10 flex w-full text-white"
+      style={{ height: height }}
+    >
+      <div className="pointer-events-none aspect-square h-full" />
+      <div className="aspect-square h-full bg-red-500" />
+      <div
+        className="w-full p-4"
+        style={{
+          backgroundColor: data.backgroundColour,
+        }}
+      >
+        {data.name}
+      </div>
+    </motion.li>
+  );
+}

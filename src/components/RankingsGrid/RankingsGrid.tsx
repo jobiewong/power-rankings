@@ -1,27 +1,31 @@
 import {
   DndContext,
+  DragOverlay,
   PointerSensor,
   closestCenter,
+  defaultDropAnimation,
   useSensor,
   useSensors,
   type DragEndEvent,
+  type DragStartEvent,
 } from "@dnd-kit/core";
 import {
   SortableContext,
   arrayMove,
   rectSortingStrategy,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useMeasure } from "react-use";
-import RankingsItem from "~/components/RankingsItem";
+import RankingsItem, { DragOverlayItem } from "~/components/RankingsItem";
 import type { ExampleData } from "~/types/datatypes";
 import { findItem, generateData } from "~/utils/utils";
 
 function RankingsGrid() {
   const [data, setData] = React.useState<ExampleData[]>([]);
-  const [dataIds, setDataIds] = React.useState<string[]>([]);
+  const [listData, setListData] = React.useState<string[]>([]);
+  const [activeId, setActiveId] = React.useState<string | null>();
+
   const [gridDimensions, setGridDimensions] = React.useState<{
     width: number;
     height: number;
@@ -35,10 +39,10 @@ function RankingsGrid() {
     }),
   );
 
-  function handleDragEnd(event: DragEndEvent) {
+  function handleDragMove(event: DragEndEvent) {
     const { active, over } = event;
     if (active.id !== over?.id && over !== null) {
-      setDataIds((data) => {
+      setListData((data) => {
         const oldIndex = data.findIndex((item) => item === active.id);
         const newIndex = data.findIndex((item) => item === over.id);
 
@@ -47,13 +51,21 @@ function RankingsGrid() {
     }
   }
 
+  function handleDragStart(event: DragStartEvent) {
+    setActiveId(event.active.id as string);
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    // setActiveId(null);
+  }
+
   React.useEffect(() => {
     setData(generateData(10));
   }, []);
 
   React.useEffect(() => {
     console.log(data.map((item) => item.name));
-    setDataIds(data.map((item) => item.uuid));
+    setListData(data.map((item) => item.uuid));
   }, [data]);
 
   React.useEffect(() => {
@@ -66,7 +78,9 @@ function RankingsGrid() {
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
-        onDragMove={handleDragEnd}
+        onDragMove={handleDragMove}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
       >
         <div className="relative">
           <div className="absolute grid w-full grid-flow-col grid-cols-2 grid-rows-5 gap-x-6 gap-y-4">
@@ -74,9 +88,9 @@ function RankingsGrid() {
               <GridNumber key={ci} rank={ci} dimensions={gridDimensions} />
             ))}
           </div>
-          <SortableContext items={dataIds} strategy={rectSortingStrategy}>
+          <SortableContext items={listData} strategy={rectSortingStrategy}>
             <ul className="grid grid-flow-col grid-cols-2 grid-rows-5 gap-x-8 gap-y-4">
-              {dataIds.map((item, ci) => {
+              {listData.map((item, ci) => {
                 const itemData = findItem(data, item);
                 if (itemData === undefined) return;
                 return <RankingsItem data={itemData} key={item} ref={ref} />;
@@ -84,6 +98,11 @@ function RankingsGrid() {
             </ul>
           </SortableContext>
         </div>
+        <DragOverlay dropAnimation={{ duration: 500 }}>
+          {activeId ? (
+            <DragOverlayItem data={findItem(data, activeId)} height={height} />
+          ) : null}
+        </DragOverlay>
       </DndContext>
     );
   }
