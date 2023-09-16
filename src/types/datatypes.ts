@@ -4,3 +4,5 @@ export interface ExampleData {
   textColour: string;
   backgroundColour: string;
 }
+
+export type SetState<T> = React.Dispatch<React.SetStateAction<T>>;

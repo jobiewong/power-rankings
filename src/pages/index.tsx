@@ -1,12 +1,28 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import OverflowGrid from "~/components/OverflowGrid";
 import RankingsGrid from "~/components/RankingsGrid";
 import { Separator } from "~/components/ui/separator";
+import { generateData } from "~/utils/utils";
 
+import type { ExampleData } from "~/types/datatypes";
 import { api } from "~/utils/api";
 
 export default function Home() {
+  const [data, setData] = useState<ExampleData[]>([]);
+  const [listData, setListData] = useState<string[]>([]);
+
+  useEffect(() => {
+    setData(generateData(10));
+  }, []);
+
+  useEffect(() => {
+    console.log(data.map((item) => item.name));
+    setListData(data.map((item) => item.uuid));
+  }, [data]);
+
   return (
     <>
       <Head>
@@ -25,8 +41,13 @@ export default function Home() {
               Power Rankings
             </h1>
           </div>
-          <div className="preview mt-8 w-[48rem]">
-            <RankingsGrid />
+          <div className="preview mt-8 w-full px-8 md:w-[48rem] md:px-0">
+            <RankingsGrid
+              data={data}
+              listItems={listData}
+              setListItems={setListData}
+            />
+            <OverflowGrid />
           </div>
         </div>
       </main>
