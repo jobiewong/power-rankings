@@ -6,3 +6,8 @@ export interface ExampleData {
 }
 
 export type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
+
+export interface ListData {
+  root: string[];
+  overflow: string[];
+}
