@@ -1,10 +1,12 @@
+import { useDroppable } from "@dnd-kit/core";
 import {
   SortableContext,
-  rectSortingStrategy,
+  horizontalListSortingStrategy,
   useSortable,
 } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
 import * as React from "react";
+import { useDrop } from "react-use";
 import type { ExampleData } from "~/types/datatypes";
 import { cn, findItem } from "~/utils/utils";
 
@@ -15,16 +17,29 @@ function OverflowGrid({
   data: ExampleData[];
   items: string[];
 }) {
+  const { setNodeRef } = useDroppable({
+    id: "dropzone",
+  });
+
   return (
-    <SortableContext id="overflow" items={items} strategy={rectSortingStrategy}>
-      <div className="preview flex w-full justify-start space-x-2 p-4">
+    <div
+      className="flex w-full justify-start space-x-2 border-2 border-dashed border-white/10 p-4"
+      ref={setNodeRef}
+    >
+      <SortableContext
+        id="overflow"
+        items={items}
+        strategy={horizontalListSortingStrategy}
+      >
         {items.length < 1 && <p className="text-white/10">Overflow Items</p>}
         {items.map((item) => {
           const dataItem = findItem(data, item);
           return <OverflowItem key={item} id={item} item={dataItem} />;
         })}
-      </div>
-    </SortableContext>
+      </SortableContext>
+
+      {/* <div className="preview grow" ref={setNodeRef}></div> */}
+    </div>
   );
 }
 

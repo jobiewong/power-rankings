@@ -11,3 +11,5 @@ export interface ListData {
   root: string[];
   overflow: string[];
 }
+
+export type OverflowBehaviour = "displace" | "disallow" | "swap";

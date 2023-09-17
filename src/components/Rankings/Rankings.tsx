@@ -1,8 +1,10 @@
 import {
   DndContext,
   DragOverlay,
+  MeasuringStrategy,
   PointerSensor,
   closestCenter,
+  closestCorners,
   defaultDropAnimation,
   useSensor,
   useSensors,
@@ -14,11 +16,18 @@ import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import OverflowGrid from "~/components/Rankings/OverflowGrid";
 import RankingsGrid from "~/components/Rankings/RankingsGrid";
-import type { ExampleData, ListData } from "~/types/datatypes";
+import type {
+  ExampleData,
+  ListData,
+  OverflowBehaviour,
+} from "~/types/datatypes";
 import { findItem, generateData } from "~/utils/utils";
 
 function Rankings() {
   const [listLength, setListLength] = useState(10);
+  const [overflowBehaviour, setflowBehaviour] =
+    useState<OverflowBehaviour>("displace");
+
   const [data, setData] = useState<ExampleData[]>([]);
   const [listData, setListData] = useState<ListData>({
     root: [],
@@ -51,6 +60,7 @@ function Rankings() {
 
     const activeContainer = findContainer(id as string);
     const overContainer = findContainer(overId as string);
+    console.log(activeContainer, overContainer);
 
     if (!activeContainer || !overContainer) {
       return;
@@ -83,6 +93,15 @@ function Rankings() {
           newActiveItems.splice(activeIndex, 1);
           const newOverItems = [...overItems];
           newOverItems.splice(overIndex, 0, id as string);
+
+          if (overContainer === "root" && newOverItems.length > listLength) {
+            if (overflowBehaviour === "displace") {
+              const displaced = newOverItems.pop();
+              if (displaced) {
+                newActiveItems.push(displaced);
+              }
+            }
+          }
 
           return {
             ...prev,
@@ -120,7 +139,12 @@ function Rankings() {
   return (
     <DndContext
       sensors={sensors}
-      collisionDetection={closestCenter}
+      collisionDetection={closestCorners}
+      measuring={{
+        droppable: {
+          strategy: MeasuringStrategy.Always,
+        },
+      }}
       onDragOver={handleDragMove}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
@@ -165,7 +189,7 @@ function DragOverlayItem({
       <div className="pointer-events-none aspect-square h-full" />
       <div className="aspect-square h-full bg-red-500" />
       <div
-        className="w-full p-4"
+        className="w-full whitespace-nowrap p-4"
         style={{
           backgroundColor: data.backgroundColour,
         }}
