@@ -1,13 +1,8 @@
-import {
-  SortableContext,
-  arrayMove,
-  rectSortingStrategy,
-} from "@dnd-kit/sortable";
-import { motion } from "framer-motion";
+import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import React, { useEffect, useState } from "react";
 import { useMeasure } from "react-use";
-import RankingsItem from "~/components/RankingsItem";
-import type { ExampleData, SetState } from "~/types/datatypes";
+import RankingsItem from "~/components/Rankings/RankingsItem";
+import type { ExampleData } from "~/types/datatypes";
 import { findItem } from "~/utils/utils";
 
 function RankingsGrid({
