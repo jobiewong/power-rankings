@@ -6,9 +6,11 @@ import type { ExampleData } from "~/types/datatypes";
 import { findItem } from "~/utils/utils";
 
 function RankingsGrid({
+  listLength,
   data,
   listItems,
 }: {
+  listLength: number;
   data: ExampleData[];
   listItems: string[];
 }) {
@@ -27,9 +29,16 @@ function RankingsGrid({
     return (
       <div className="relative">
         <div className="absolute grid w-full grid-flow-col grid-cols-1 grid-rows-[repeat(10,_minmax(0,1fr))] gap-x-6 gap-y-4 md:grid-cols-2 md:grid-rows-5">
-          {listItems.map((item, ci) => (
-            <GridNumber key={ci} rank={ci} dimensions={gridDimensions} />
-          ))}
+          {listLength > 0 &&
+            [...Array(listLength).keys()].map((rank) => {
+              return (
+                <GridNumber
+                  key={rank}
+                  rank={rank}
+                  dimensions={gridDimensions}
+                />
+              );
+            })}
         </div>
         <SortableContext
           id="root"

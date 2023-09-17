@@ -18,6 +18,7 @@ import type { ExampleData, ListData } from "~/types/datatypes";
 import { findItem, generateData } from "~/utils/utils";
 
 function Rankings() {
+  const [listLength, setListLength] = useState(10);
   const [data, setData] = useState<ExampleData[]>([]);
   const [listData, setListData] = useState<ListData>({
     root: [],
@@ -48,10 +49,8 @@ function Rankings() {
     const id = active.id;
     const overId = over?.id;
 
-    // Find the containers
     const activeContainer = findContainer(id as string);
     const overContainer = findContainer(overId as string);
-    console.log(activeContainer, overContainer, active, over);
 
     if (!activeContainer || !overContainer) {
       return;
@@ -127,7 +126,11 @@ function Rankings() {
       onDragEnd={handleDragEnd}
     >
       <div className="mt-8 w-full space-y-4 px-8 md:w-[48rem] md:space-y-10 md:px-0">
-        <RankingsGrid data={data} listItems={listData.root} />
+        <RankingsGrid
+          data={data}
+          listItems={listData.root}
+          listLength={listLength}
+        />
         <OverflowGrid data={data} items={listData.overflow} />
       </div>
       <DragOverlay
@@ -151,7 +154,6 @@ function DragOverlayItem({
   height,
 }: {
   data: ExampleData | undefined;
-
   height: number;
 }) {
   if (data === undefined) return null;

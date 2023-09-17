@@ -6,7 +6,7 @@ import {
 import { motion } from "framer-motion";
 import * as React from "react";
 import type { ExampleData } from "~/types/datatypes";
-import { findItem } from "~/utils/utils";
+import { cn, findItem } from "~/utils/utils";
 
 function OverflowGrid({
   data,
@@ -17,7 +17,7 @@ function OverflowGrid({
 }) {
   return (
     <SortableContext id="overflow" items={items} strategy={rectSortingStrategy}>
-      <div className="preview flex w-full justify-center space-x-2 p-4">
+      <div className="preview flex w-full justify-start space-x-2 p-4">
         {items.length < 1 && <p className="text-white/10">Overflow Items</p>}
         {items.map((item) => {
           const dataItem = findItem(data, item);
@@ -44,8 +44,8 @@ function OverflowItem({
   return (
     <motion.div
       ref={setNodeRef}
-      className="aspect-square rounded-sm bg-red-500"
-      style={{ width: "10rem", backgroundColor: item?.backgroundColour }}
+      className={cn("aspect-square w-20 rounded-sm bg-red-500 2xl:w-24")}
+      style={{ backgroundColor: item?.backgroundColour }}
       animate={{ opacity: isDragging ? 0.3 : 1 }}
       layoutId={item?.uuid}
       transition={{
