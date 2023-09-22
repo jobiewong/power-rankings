@@ -1,3 +1,4 @@
+import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import React, { useEffect, useState } from "react";
 import { useMeasure } from "react-use";
@@ -24,6 +25,10 @@ function RankingsGrid({
     setGridDimensions({ width, height });
   }, [width, height]);
 
+  const { setNodeRef } = useDroppable({
+    id: "root",
+  });
+
   if (data === undefined) return <div></div>;
   else {
     return (
@@ -45,7 +50,10 @@ function RankingsGrid({
           items={listItems}
           strategy={rectSortingStrategy}
         >
-          <ul className="grid grid-flow-col grid-cols-1 grid-rows-[repeat(10,_minmax(0,1fr))] gap-x-8 gap-y-4 md:grid-cols-2 md:grid-rows-5">
+          <ul
+            ref={setNodeRef}
+            className="grid grid-flow-col grid-cols-1 grid-rows-[repeat(10,_minmax(0,1fr))] gap-x-8 gap-y-4 md:grid-cols-2 md:grid-rows-5"
+          >
             {listItems.map((itemId) => {
               const itemData = findItem(data, itemId);
               if (itemData === undefined) return;

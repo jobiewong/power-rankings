@@ -1,17 +1,18 @@
 import {
   DndContext,
   DragOverlay,
+  KeyboardSensor,
   MeasuringStrategy,
   PointerSensor,
-  closestCenter,
   closestCorners,
   defaultDropAnimation,
   useSensor,
   useSensors,
   type DragEndEvent,
   type DragStartEvent,
+  type UniqueIdentifier,
 } from "@dnd-kit/core";
-import { arrayMove } from "@dnd-kit/sortable";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import OverflowGrid from "~/components/Rankings/OverflowGrid";
@@ -40,6 +41,9 @@ function Rankings() {
       activationConstraint: {
         distance: 10,
       },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
 
@@ -122,7 +126,7 @@ function Rankings() {
   }
 
   useEffect(() => {
-    setData(generateData(15));
+    setData(generateData(10));
   }, []);
 
   useEffect(() => {
@@ -149,7 +153,7 @@ function Rankings() {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="mt-8 w-full space-y-4 px-8 md:w-[48rem] md:space-y-10 md:px-0">
+      <div className="mt-8 w-full space-y-4 px-8 md:w-[48rem] md:space-y-12 md:px-0">
         <RankingsGrid
           data={data}
           listItems={listData.root}
@@ -187,7 +191,7 @@ function DragOverlayItem({
       style={{ height: height }}
     >
       <div className="pointer-events-none aspect-square h-full" />
-      <div className="aspect-square h-full bg-red-500" />
+      <motion.div className="aspect-square h-full bg-red-500" />
       <div
         className="w-full whitespace-nowrap p-4"
         style={{

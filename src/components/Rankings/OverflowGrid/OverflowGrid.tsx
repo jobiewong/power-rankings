@@ -6,7 +6,6 @@ import {
 } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
 import * as React from "react";
-import { useDrop } from "react-use";
 import type { ExampleData } from "~/types/datatypes";
 import { cn, findItem } from "~/utils/utils";
 
@@ -18,28 +17,29 @@ function OverflowGrid({
   items: string[];
 }) {
   const { setNodeRef } = useDroppable({
-    id: "dropzone",
+    id: "overflow",
   });
 
   return (
-    <div
-      className="flex w-full justify-start space-x-2 border-2 border-dashed border-white/10 p-4"
-      ref={setNodeRef}
+    <SortableContext
+      id="overflow"
+      items={items}
+      strategy={horizontalListSortingStrategy}
     >
-      <SortableContext
-        id="overflow"
-        items={items}
-        strategy={horizontalListSortingStrategy}
-      >
-        {items.length < 1 && <p className="text-white/10">Overflow Items</p>}
-        {items.map((item) => {
-          const dataItem = findItem(data, item);
-          return <OverflowItem key={item} id={item} item={dataItem} />;
-        })}
-      </SortableContext>
-
-      {/* <div className="preview grow" ref={setNodeRef}></div> */}
-    </div>
+      <div className="flex min-h-[8rem] w-full flex-col border-2 border-dashed border-white/10 p-4">
+        <ul ref={setNodeRef} className="flex w-full justify-center space-x-2">
+          {items.map((item) => {
+            const dataItem = findItem(data, item);
+            return <OverflowItem key={item} id={item} item={dataItem} />;
+          })}
+        </ul>
+        {items.length === 0 && (
+          <div className="flex grow items-center justify-center">
+            <p className="text-white text-opacity-30">Overflow Container</p>
+          </div>
+        )}
+      </div>
+    </SortableContext>
   );
 }
 
@@ -57,7 +57,7 @@ function OverflowItem({
     transition: { duration: 750, easing: "ease" },
   });
   return (
-    <motion.div
+    <motion.li
       ref={setNodeRef}
       className={cn("aspect-square w-20 rounded-sm bg-red-500 2xl:w-24")}
       style={{ backgroundColor: item?.backgroundColour }}
@@ -69,6 +69,6 @@ function OverflowItem({
       }}
       {...attributes}
       {...listeners}
-    ></motion.div>
+    ></motion.li>
   );
 }
