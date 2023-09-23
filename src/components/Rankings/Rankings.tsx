@@ -13,7 +13,7 @@ import {
   type UniqueIdentifier,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import OverflowGrid from "~/components/Rankings/OverflowGrid";
 import RankingsGrid from "~/components/Rankings/RankingsGrid";
@@ -33,8 +33,14 @@ function Rankings() {
   const [listData, setListData] = useState<ListData>({
     root: [],
     overflow: [],
+    tierBreaks: [],
   });
   const [activeId, setActiveId] = useState<string | null>();
+  const [activeContainer, setActiveContainer] = useState<string>("");
+  const [gridDimensions, setGridDimensions] = useState<{
+    width: number;
+    height: number;
+  }>({ width: 56, height: 56 });
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -64,11 +70,12 @@ function Rankings() {
 
     const activeContainer = findContainer(id as string);
     const overContainer = findContainer(overId as string);
-    console.log(activeContainer, overContainer);
 
     if (!activeContainer || !overContainer) {
       return;
     }
+
+    setActiveContainer(overContainer);
 
     if (over !== null) {
       setListData((prev) => {
@@ -130,14 +137,21 @@ function Rankings() {
   }, []);
 
   useEffect(() => {
-    const listData = data.map((item) => item.uuid).slice(0, 10);
+    const rootData = data.map((item) => item.uuid).slice(0, 10);
     console.log("🚀 - file: index.tsx:147 - useEffect - listData: ", listData);
     const overflowData = data.map((item) => item.uuid).slice(10, 15);
     console.log(
       "🚀 - file: index.tsx:149 - useEffect - overflowData: ",
       overflowData,
     );
-    setListData({ root: listData, overflow: overflowData });
+
+    const tierBreakInit = Array.from({ length: listLength }, () => "0");
+
+    setListData({
+      root: rootData,
+      overflow: overflowData,
+      tierBreaks: tierBreakInit,
+    });
   }, [data]);
 
   return (
@@ -156,19 +170,20 @@ function Rankings() {
       <div className="mt-8 w-full space-y-4 px-8 md:w-[48rem] md:space-y-12 md:px-0">
         <RankingsGrid
           data={data}
-          listItems={listData.root}
+          listData={listData}
+          setListData={setListData}
           listLength={listLength}
+          setGridDimensions={setGridDimensions}
+          gridDimensions={gridDimensions}
         />
         <OverflowGrid data={data} items={listData.overflow} />
       </div>
-      <DragOverlay
-        dropAnimation={{
-          ...defaultDropAnimation,
-          duration: 750 / 2,
-        }}
-      >
+      <DragOverlay dropAnimation={null}>
         {activeId ? (
-          <DragOverlayItem data={findItem(data, activeId)} height={56} />
+          <DragOverlayItem
+            data={findItem(data, activeId)}
+            dimensions={gridDimensions}
+          />
         ) : null}
       </DragOverlay>
     </DndContext>
@@ -179,27 +194,30 @@ export default Rankings;
 
 function DragOverlayItem({
   data,
-  height,
+  dimensions,
 }: {
   data: ExampleData | undefined;
-  height: number;
+  dimensions: { width: number; height: number };
 }) {
   if (data === undefined) return null;
   return (
-    <motion.li
-      className="z-10 flex w-full text-white"
-      style={{ height: height }}
+    <motion.div
+      className="z-10 flex text-white"
+      style={{
+        height: dimensions.height,
+        width: dimensions.width + dimensions.height,
+      }}
     >
       <div className="pointer-events-none aspect-square h-full" />
-      <motion.div className="aspect-square h-full bg-red-500" />
-      <div
-        className="w-full whitespace-nowrap p-4"
+      <motion.div
+        className="aspect-square h-full"
         style={{
           backgroundColor: data.backgroundColour,
         }}
-      >
+      />
+      <div className="w-full whitespace-nowrap bg-stone-600 p-4">
         {data.name}
       </div>
-    </motion.li>
+    </motion.div>
   );
 }

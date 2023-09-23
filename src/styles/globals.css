@@ -6,3 +6,17 @@
 .preview {
   border: 2px dashed red;
 }
+
+.triangle::after {
+  height: 0px;
+  width: 0px;
+  position: absolute;
+  right: 0;
+  top: -7px;
+  border-right: solid 10px transparent;
+  border-bottom: solid 8px transparent;
+  border-top: solid 8px transparent;
+
+  content: "";
+  display: block;
+}

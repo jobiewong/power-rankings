@@ -23,15 +23,15 @@ const RankingsItem = React.forwardRef<HTMLDivElement, { data: ExampleData }>(
         {...attributes}
         {...listeners}
       >
-        <div ref={ref} className="pointer-events-none aspect-square h-full" />
-        <div className="aspect-square h-full bg-red-500" />
-        <div
-          className="w-full p-4"
-          style={{
-            backgroundColor: data.backgroundColour,
-          }}
-        >
-          {data.name}
+        <div className="pointer-events-none aspect-square h-full" />
+        <div ref={ref} className="flex w-full">
+          <div
+            className="aspect-square h-full"
+            style={{
+              backgroundColor: data.backgroundColour,
+            }}
+          />
+          <div className="w-full bg-stone-600 p-4">{data.name}</div>
         </div>
       </motion.li>
     );

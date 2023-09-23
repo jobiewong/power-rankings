@@ -1,27 +1,32 @@
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
-import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import React, { useEffect } from "react";
 import { useMeasure } from "react-use";
 import RankingsItem from "~/components/Rankings/RankingsItem";
-import type { ExampleData } from "~/types/datatypes";
-import { findItem } from "~/utils/utils";
+import type { ExampleData, ListData, SetState } from "~/types/datatypes";
+import { cn, findItem } from "~/utils/utils";
 
 function RankingsGrid({
   listLength,
   data,
-  listItems,
+  listData,
+  setListData,
+  gridDimensions,
+  setGridDimensions,
 }: {
   listLength: number;
   data: ExampleData[];
-  listItems: string[];
+  listData: ListData;
+  setListData: SetState<ListData>;
+  gridDimensions: { width: number; height: number };
+  setGridDimensions: SetState<{ width: number; height: number }>;
 }) {
-  const [gridDimensions, setGridDimensions] = useState<{
-    width: number;
-    height: number;
-  }>({ width: 56, height: 56 });
   const [ref, { width, height }] = useMeasure<HTMLDivElement>();
 
   useEffect(() => {
+    console.log("🚀 - file: RankingsGrid.tsx:26 - width: ", height);
+
     setGridDimensions({ width, height });
   }, [width, height]);
 
@@ -45,16 +50,61 @@ function RankingsGrid({
               );
             })}
         </div>
+        <div className="absolute grid h-full w-full grid-flow-col grid-cols-1 grid-rows-[repeat(10,_minmax(0,1fr))] items-end gap-x-6 gap-y-4 md:grid-cols-2 md:grid-rows-5">
+          {listData.tierBreaks.map((item, ci) => {
+            return (
+              <div
+                key={ci}
+                className="relative flex h-4 w-full translate-x-4 translate-y-4 items-center py-1"
+              >
+                <motion.div
+                  className={
+                    "group absolute right-0 top-0 flex h-full w-[90%] cursor-pointer items-center"
+                  }
+                  onClick={() => {
+                    const current = listData.tierBreaks[ci];
+                    setListData((prev) => {
+                      const newListData = { ...prev };
+                      newListData.tierBreaks[ci] = current === "1" ? "0" : "1";
+                      return newListData;
+                    });
+                  }}
+                  initial={"initial"}
+                  whileHover={
+                    listData.tierBreaks[ci] === "1" ? "active" : "hover"
+                  }
+                  animate={
+                    listData.tierBreaks[ci] === "1" ? "active" : "initial"
+                  }
+                >
+                  <motion.div
+                    className={cn(
+                      "triangle relative h-[.125rem] w-full bg-white after:border-r-white",
+                    )}
+                    variants={{
+                      initial: { x: 20, opacity: 0 },
+                      hover: {
+                        x: 20,
+                        opacity: 1,
+                      },
+                      active: { x: 0, opacity: 1 },
+                    }}
+                  />
+                </motion.div>
+              </div>
+            );
+          })}
+        </div>
         <SortableContext
           id="root"
-          items={listItems}
+          items={listData.root}
           strategy={rectSortingStrategy}
         >
           <ul
             ref={setNodeRef}
             className="grid grid-flow-col grid-cols-1 grid-rows-[repeat(10,_minmax(0,1fr))] gap-x-8 gap-y-4 md:grid-cols-2 md:grid-rows-5"
           >
-            {listItems.map((itemId) => {
+            {listData.root.map((itemId) => {
               const itemData = findItem(data, itemId);
               if (itemData === undefined) return;
               return <RankingsItem data={itemData} key={itemId} ref={ref} />;
@@ -85,7 +135,42 @@ function GridNumber({
         style={{ width: dimensions.height }}
       >
         {rank + 1}
+        {rank === 0 && <Underline colour="#CBAE39" iter={rank} />}
+        {rank === 1 && <Underline colour="#D8D8D8" iter={rank} />}
+        {rank === 2 && <Underline colour="#AC8A61" iter={rank} />}
       </div>
     </div>
+  );
+}
+
+const variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 25,
+    transition: { delay: custom * 0.2, damping: 5, type: "spring" },
+  }),
+};
+
+function Underline(props: { colour: string; iter: number }) {
+  const colour = props.colour;
+
+  return (
+    <motion.div
+      className="absolute flex translate-y-6 flex-col items-center"
+      variants={variants}
+      custom={props.iter}
+      initial={"hidden"}
+      animate={"visible"}
+      transition={{
+        delay: 200,
+      }}
+    >
+      <div
+        className={`mb-1 h-[.2rem] w-8`}
+        style={{ backgroundColor: colour }}
+      />
+      <div className={`h-[.2rem] w-5`} style={{ backgroundColor: colour }} />
+    </motion.div>
   );
 }
