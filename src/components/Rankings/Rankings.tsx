@@ -5,15 +5,13 @@ import {
   MeasuringStrategy,
   PointerSensor,
   closestCorners,
-  defaultDropAnimation,
   useSensor,
   useSensors,
   type DragEndEvent,
   type DragStartEvent,
-  type UniqueIdentifier,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import OverflowGrid from "~/components/Rankings/OverflowGrid";
 import RankingsGrid from "~/components/Rankings/RankingsGrid";

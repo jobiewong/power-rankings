@@ -1,7 +1,10 @@
+import { SettingsIcon } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import AddTeamDialog from "~/components/AddTeamDialog";
 import Rankings from "~/components/Rankings";
+import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { api } from "~/utils/api";
 
@@ -25,6 +28,12 @@ export default function Home() {
             </h1>
           </div>
           <Rankings />
+        </div>
+        <div className="absolute bottom-0 right-0 space-x-2 px-6 py-4">
+          <AddTeamDialog />
+          <Button variant="link" className="p-0">
+            <SettingsIcon className="h-6 w-6 text-white opacity-20 transition-all duration-150 ease-in-out hover:opacity-100" />
+          </Button>
         </div>
       </main>
     </>
